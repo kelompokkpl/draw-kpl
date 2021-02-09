@@ -20,7 +20,6 @@ new Vue({
 		},
 	},
 	created() { 
-		
 	},
 	computed: {
 		isDisabled: function() {

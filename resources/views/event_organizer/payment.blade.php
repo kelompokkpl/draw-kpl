@@ -10,10 +10,6 @@
                   <i class="fa fa-table"></i> Show Data
               </a>
 
-              <a href="{{URL::to('eo/payment/create')}}" id='btn_show_data' class="btn btn-sm btn-success" title="Add Data Payment">
-                  <i class="fa fa-plus-circle"></i> Add Data
-              </a>
-
             </h1>
 
             <ol class="breadcrumb">
@@ -30,6 +26,7 @@
       <table class='table table-striped table-bordered datatables-simple'>
         <thead>
             <tr>
+              <th>Invoice Code</th>
               <th>Event Name</th>
               <th>Payment Status</th>
               <th class="text-right">Action</th>
@@ -38,18 +35,32 @@
         <tbody>
           @foreach($event as $row)
             <tr>
+              <td>{{$row->code_invoice}}</td>
               <td>{{$row->name}}</td>
               <td>
-                  <span class="label label-{{($row->payment_status=='Paid')?'success':'danger'}}">
-                    {{$row->payment_status}}
-                  </span>
+                  @if($row->payment_status=='Paid')
+                    <span class="label label-success">{{$row->payment_status}}</span>
+                  @elseif($row->payment_status=='Unpaid')
+                    <span class="label label-danger">{{$row->payment_status}}</span>
+                  @else
+                    <span class="label label-warning">{{$row->payment_status}}</span>
+                  @endif
               </td>
               <td class="text-right">
-                <a class='btn btn-xs btn-success' title='Upload' data-toggle="modal" data-target="#paymentCreate{{$row->id}}">
-                  <i class='fa fa-upload'></i> Upload 
-                </a>
-
-                <a class='btn btn-xs btn-primary btn-detail' title='Detail Data' href='{{ route('event.show', $row->id) }}'>
+                @if($row->payment_status=='Unpaid' || $row->payment_status=='Rejected')
+                  <a class='btn btn-xs btn-success' title='Upload' data-toggle="modal" data-target="#paymentCreate{{$row->id}}">
+                    <i class='fa fa-upload'></i> Upload 
+                  </a>
+                @elseif($row->payment_status=='Paid')
+                  <a class='btn btn-xs btn-default'>
+                    <i class='fa fa-upload'></i> Upload 
+                  </a>
+                @else
+                  <a class='btn btn-xs btn-default' data-toggle="tooltip" data-placement="top" title='Want to change the data? Please cancel payment first in payment detail'>
+                    <i class='fa fa-upload'></i> Upload 
+                  </a>
+                @endif
+                <a class='btn btn-xs btn-primary btn-detail' title='Detail Data' href='{{ route('payment.show', $row->code_invoice) }}'>
                   <i class='fa fa-eye'></i> Detail
                 </a>
               </td>
@@ -72,7 +83,7 @@
                                 <span class='text-danger' title='This field is required'>*</span>
                             </label>
                             <div class="col-sm-10">
-                              <input type='text' title="Name" required placeholder='You can only enter the letter only'  maxlength=100 class='form-control' name="name" id="name" value=''/>
+                              <input type='text' title="Name" required placeholder='You can enter the letter only'  maxlength=100 class='form-control' name="name" id="name" value=''/>
                               <div class="text-danger"></div>
                               <p class='help-block'></p>
                             </div>
@@ -83,7 +94,7 @@
                               <span class='text-danger' title='This field is required'>*</span>
                             </label>
                             <div class="col-sm-10">
-                              <input type='number' title="Nominal" required class='form-control' placeholder='You can only enter the number only' name="nominal"/>
+                              <input type='number' title="Nominal" required class='form-control' placeholder='You can enter the number only' name="nominal"/>
                               <div class="text-danger"></div>
                               <p class='help-block'></p>
                             </div>

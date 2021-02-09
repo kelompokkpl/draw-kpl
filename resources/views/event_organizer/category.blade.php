@@ -5,15 +5,12 @@
 
         <section class="content-header">
             <h1> <i class='fa fa-bars'></i> Category &nbsp;&nbsp;
-
               <a href="" id='btn_show_data' class="btn btn-sm btn-primary" title="Show Data">
                   <i class="fa fa-table"></i> Show Data
               </a>
-
               <a href="{{URL::to('eo/dashboard_event/category/create')}}" id='btn_show_data' class="btn btn-sm btn-success" title="Add Data">
                   <i class="fa fa-plus-circle"></i> Add Data
               </a>
-
             </h1>
             <?php
             $module = CRUDBooster::getCurrentModule();
@@ -98,9 +95,9 @@
                   </span>
               </td>
               <td class="text-right">
-                <a class='btn btn-xs btn-info btn-detail' title="Lets's Draw!" href=''>
-                  <i class='fa fa-magic'> Draw </i>
-                </a>
+                <!-- <a class='btn btn-xs btn-info btn-detail' title="Lets's Draw!" href=''>
+                  <i class='fa fa-magic'> Try Draw </i>
+                </a> -->
                 <a class='btn btn-xs btn-primary btn-detail' title='Detail Data' href='{{ route('category.show', $row->id) }}'>
                   <i class='fa fa-eye'></i>
                 </a>

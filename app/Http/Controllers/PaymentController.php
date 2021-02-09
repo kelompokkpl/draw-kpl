@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use CRUDBooster;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,9 +23,9 @@ class PaymentController extends Controller
     {
         $data['page_title'] = 'EO Panel: Payment';
         $data['event'] = DB::table('event')->where('cms_users_id', Session::get('admin_id'))
+                                           ->whereNull('deleted_at')
                                            ->get();
         return view('event_organizer.payment', $data);
-
     }
 
     /**
@@ -46,10 +47,10 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                            'name' => 'required|max:100',
-                            'nominal' => 'required',
-                            'transfer_date' => 'required'
-                          ]);
+                    'name' => 'required|max:100',
+                    'nominal' => 'required',
+                    'transfer_date' => 'required'
+                    ]);
 
         $path = 'assets/uploads/payment';
         if($request->file('photo')!=''){
@@ -61,7 +62,8 @@ class PaymentController extends Controller
         $data['transfer_date'] = $request->input('transfer_date');
         $data['nominal'] = $request->input('nominal');
         $data['event_id'] = $request->input('event_id');
-        $data['created_at'] = Carbon::now()->timestamp;
+        $data['status'] = 'Waiting for confirmation';
+        $data['created_at'] = date('Y-m-d H:i:s');
 
         $insert = DB::table('payment')->insert($data);
         if($insert){
@@ -75,7 +77,7 @@ class PaymentController extends Controller
             CRUDBooster::sendNotification($config);
 
             //Redirect
-            CRUDBooster::redirect(URL::to('eo/payment'),"Yohoo! The payment has been saved. Wait until Administrator confirm your payment, so your event will be active","info");
+            CRUDBooster::redirect(URL::to('eo/payment'), "Yohoo! The payment has been saved. Wait until Administrator confirm your payment, so your event will be active", "info");
             
         }
     }
@@ -89,32 +91,34 @@ class PaymentController extends Controller
     public function show($id)
     {
         $data['page_title'] = 'EO Panel: Detail Payment';
-        $data['payment'] = DB::table('payment')->where('id', $id)->first();
+        $data['event'] = DB::table('event')->where('code_invoice', $id)->first();
+        $data['payment'] = DB::table('payment')
+                            ->whereNull('deleted_at')
+                            ->where('event_id', $data['event']->id)
+                            ->orderBy('created_at','desc')
+                            ->get();
 
         return view('event_organizer.detail_payment', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        
+    public function cancelTransaction($id){
+        DB::table('payment')->where('id', $id)->update(['status'=>'Canceled']);
+        $payment = DB::table('payment')->where('id', $id)->select('event_id')->first();
+        DB::table('event')->where('id', $payment->event_id)->update(['payment_status'=>'Unpaid']);
+
+        CRUDBooster::redirect(URL::previous(), "Yohoo! The status of payment transaction has been changed.", "info");
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function printInvoice($id){
+        $data['event'] = DB::table('event')
+                            ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                            ->select('event.*', 'cms_users.name as users_name', 'cms_users.email')
+                            ->where('code_invoice', $id)
+                            ->first();
+        $data['payment'] = DB::table('payment')->where('event_id', $data['event']->id)->orderBy('created_at','desc')->get();
+        
+        $pdf = PDF::loadView('invoice.print', $data);  
+        return $pdf->stream($id.'.pdf', array('Attachment'=>false));
     }
 
 }

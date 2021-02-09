@@ -31,6 +31,11 @@ Route::prefix('admin')->group(function () {
 	// Winner Module
 	Route::get('winner_by_event_category/{event}/{category}', 'AdminWinnerController@getParticipant');
 	Route::post('winner/save_winner', 'AdminWinnerController@saveWinner');
+
+	// Payment Module
+	Route::get('payment/invoice/{id}', 'AdminPaymentController@printInvoice');
+	Route::post('payment/save_payment', 'AdminPaymentController@savePayment');
+	Route::post('payment/update_payment/{id}', 'AdminPaymentController@savePayment')->name('savePayment');
 });
 
 
@@ -39,16 +44,49 @@ Route::get('eo/login', 'EOController@getLogin')->name('getLoginEO');
 Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 	Route::get('/', 'EOController@getIndex');
 	Route::get('profile', 'EOController@getProfile')->name('getEOProfile');
+	Route::post('profile', 'EOController@updateProfile')->name('updateProfile');
 	Route::get('event_delete/{id}', 'EOEventController@destroy');
 	Route::get('lockscreen', 'EOController@getLockscreen')->name('getEOLockScreen');
 
 	Route::get('dashboard_event/category_delete/{id}', 'EOCategoryController@destroy');
+	Route::get('dashboard_event/participant_delete/{id}', 'EOParticipantController@destroy');
 	Route::get('dashboard_event/preferences', 'EOEventController@getPreferences');
+
+	Route::get('dashboard_event/draw', 'DrawController@getIndex');
+	Route::get('dashboard_event/recent', 'DrawController@getRecent');
+	Route::get('dashboard_event/drawing', 'DrawController@getDraw');
+	Route::get('dashboard_event/winner', 'DrawController@getWinner');
+	Route::get('dashboard_event/winners/{id}', 'DrawController@getWinnerByCategory');
+	Route::get('dashboard_event/history', 'DrawController@getHistory');
+	Route::get('dashboard_event/new', 'DrawController@getNew');
+
+	Route::get('dashboard_event/draww', 'DrawwController@getIndex');
+	Route::get('dashboard_event/recentt', 'DrawwController@getRecent');
+	Route::get('dashboard_event/drawingg', 'DrawwController@getDraw');
+	Route::get('dashboard_event/winnerr', 'DrawwController@getWinner');
+	Route::get('dashboard_event/winnerss/{id}', 'DrawwController@getWinnerByCategory');
+	Route::get('dashboard_event/historyy', 'DrawwController@getHistory');
+
+	Route::get('dashboard_event/print_invoice/{id}', 'PaymentController@printInvoice')->name('printInvoice');
+	Route::get('payment/cancel/{id}', 'PaymentController@cancelTransaction');
+
+	// Category Disabled Module// Disabled Category Module
+	Route::get('dashboard_event/category_disabled', 'EOCategoryDisabledController@index');
+	Route::get('dashboard_event/add_selected_participant', 'EOCategoryDisabledController@addSelectedParticipant');
+	Route::get('category_by_event/{event}', 'EOCategoryDisabledController@getCategory');
+	Route::get('participant_by_category/{category}', 'EOCategoryDisabledController@getParticipant');
+	Route::post('category_disabled/save_disabled_category', 'EOCategoryDisabledController@saveDisabledCategory')->name('save_disabled_category');
+	Route::get('enable_participant/{id}', 'EOCategoryDisabledController@enableParticipant')->name('enable_participant');
+
+	// Participant Module
+	Route::get('dashboard_event/participant/import', 'EOParticipantController@getImportView');
+	Route::post('dashboard_event/participant/import', 'EOParticipantController@import')->name('importParticipant');
 
 	// Resources
 	Route::resources([
 	    'event' => 'EOEventController',
 	    'dashboard_event/category' => 'EOCategoryController',
+	    'dashboard_event/participant' => 'EOParticipantController',
 	    'payment' => 'PaymentController'
 	]);
 
@@ -57,3 +95,7 @@ Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 		Route::get('/{id}', 'EOEventController@dashboard');
 	});
 });
+
+Route::get('sendgmail', 'EOController@sendmail');
+Route::get('print', 'EOController@printPDF');
+Route::get('import', 'EOController@import');

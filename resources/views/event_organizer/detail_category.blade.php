@@ -47,7 +47,7 @@
           : @if($category->is_draw == 0)
               <span class="label label-info">Hasn't been drawn</span>
             @else
-              <span class="label label-default">Drawn!</span>
+              <span class="label label-default">Drawn!</span> (at {{date('F d, Y H:i', strtotime($category->draw_date))}})
             @endif
         </div>
       </div>

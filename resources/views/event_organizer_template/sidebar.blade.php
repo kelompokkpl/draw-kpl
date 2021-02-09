@@ -35,20 +35,51 @@
                 @endif
 
                 @if(!Str::contains(URL::current(), 'dashboard_event'))
-                    <li data-id='{{$dashboard->id}}' class="{{ (Str::contains(URL::current(), 'event')) ? 'active' : '' }}"><a href='{{URL::to('eo/event')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>
-                        <span>Event</span> </a>
+                    <li data-id='{{$dashboard->id}}' class="{{ (Str::contains(URL::current(), 'event')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/event')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'>
+                            <i class='fa fa-bars'></i>
+                            <span>Event</span> 
+                        </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'payment')) ? 'active' : '' }}"><a href='{{URL::to('eo/payment')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-money'></i>
-                        <span>Payment</span> </a>
+                    <li class="{{ (Str::contains(URL::current(), 'payment')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/payment')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'>
+                            <i class='fa fa-money'></i>
+                            <span>Payment</span> 
+                        </a>
                     </li>
                 @else
-                    <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/draw')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-magic'></i>
-                        <span>Let's Draw!</span> </a>
+                    <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
+                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
+                        @if(Session::get('event_active')!='Active')
+                            onclick="swal({   
+                                title: 'Warning',   
+                                text: 'Your event status is Not Active, so you can not to draw!',   
+                                type: 'warning',   
+                                showCancelButton: false,   
+                                confirmButtonColor: '#ff0000',   
+                                confirmButtonText: 'OK',  
+                                closeOnConfirm: false 
+                            });"
+                        @endif
+                        >
+                            <i class='fa fa-magic'></i>
+                            <span>Let's Draw!</span> 
+                        </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'category')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/category')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>
+                    <li class="{{ (Str::contains(URL::current(), 'category')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/dashboard_event/category')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>
                         <span>Category</span> </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'preferences')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/preferences')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-gear'></i>
+                    <li class="{{ (Str::contains(URL::current(), 'participant')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/dashboard_event/participant')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-users'></i>
+                        <span>Participant</span> </a>
+                    </li>
+                    <li class="{{ (Str::contains(URL::current(), 'category_disabled')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/dashboard_event/category_disabled')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-ban'></i>
+                        <span>Category Disabled</span> </a>
+                    </li>
+                    <li class="{{ (Str::contains(URL::current(), 'preferences')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/dashboard_event/preferences')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-gear'></i>
                         <span>Preferences</span> </a>
                     </li>
                 @endif

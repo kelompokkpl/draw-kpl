@@ -30,6 +30,7 @@
     <div class="panel-body">
         <form method="POST" action="{{URL::to('eo/event')}}" id="form">
           @csrf
+          <div class="col-sm-10 text-right">
           <div class='form-group header-group-0 ' id='form-group-name' style="">
             <label class='control-label col-sm-2'> Event Name
                 <span class='text-danger' title='This field is required'>*</span>
@@ -53,8 +54,7 @@
           </div>
 
           <div class='form-group form-datepicker header-group-0 ' id='form-group-date_end' style="">
-            <div class="col-sm-1"></div>
-            <label class='control-label col-sm-1'>Date End
+            <label class='control-label col-sm-2'>Date End
               <span class='text-danger' title='This field is required'>*</span>
             </label>
             <div class="col-sm-4">
@@ -63,10 +63,7 @@
               <p class='help-block'></p>
             </div>
           </div>
-          
-          <input type='hidden' name="payment_status" value="Unpaid">   
-          <input type='hidden' name="status" value='Non Active'/>
-          <input type='hidden' name="cms_users_id" value='{{Session::get("admin_id")}}'/>
+          </div>
           <div class="col-md-12">
             <br>
             <button type="reset" class="btn btn-danger">Reset</button>

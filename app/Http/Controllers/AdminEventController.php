@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 	use Session;
-	// use Request;
 	use DB;
 	use CRUDBooster;
 	use Illuminate\Http\Request;
@@ -244,7 +243,7 @@
 			if($status == 'Active'){
 				//Handle notification to EO page
 				$data = DB::table('event')->where('id', $id)->select('event.name', 'event.cms_users_id')->first();
-		        $config['content'] = "Hooray! Event '".ucfirst($data->name)."' has ben activated!";
+		        $config['content'] = "Hooray! Event '".ucfirst($data->name)."' has been activated!";
 				$config['to'] = URL::to('eo/event');
 				$config['id_cms_users'] = [$data->cms_users_id]; //This is an array of id users
 				CRUDBooster::sendNotification($config);
@@ -290,6 +289,9 @@
 				switch($column_value) {
 					case 'Unpaid':
 				     	$column_value = "<span class='label label-danger'>Unpaid</span>";
+					break;
+					case 'Waiting for confirmation':
+				     	$column_value = "<span class='label label-warning'>".$column_value."</span>";
 					break;
 					case 'Paid':
 				    	$column_value = "<span class='label label-success'>Paid</span>";

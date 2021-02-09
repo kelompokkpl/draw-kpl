@@ -3,6 +3,7 @@ function openCloseMenu() {
     var menu = $('.js-menu-toggle');
 
     if ($('body').hasClass('show-sidebar')) {
+        console.log('menu');
         $('body').removeClass('show-sidebar');
         menu.removeClass('active');
     } else {
@@ -33,18 +34,37 @@ function down(){
 
         $('body').find('.menu-item.active').removeClass('active')
         $('li.menu-item').eq(index+1).addClass('active')
-    }   
+    } else{
+         // Scrollbar category
+        if($('#ul-scroll')[0]){
+            $('#ul-scroll li.selected').focus();
+        }
+    }  
 }
 
 
 // Handle draw button
 function goToDraw(){
     if ($('.draw-btn')[0]) {
-        $(location).attr("href", "file:///D:/NGAMPUS/6/PKL/explore/draw/index2.html");
+        let category = $('#ul-scroll li.selected').attr('value');
+        url += '?category='+category;
+        // doBounce($('.draw-btn'), 3, '50px', 300); 
+        // $( ".draw.btn" ).toggle( "bounce", { times: 3 }, "slow" );
+        $('#cont').load(url);
     } else if ($('.draw')[0]){
-        $(location).attr("href", "file:///D:/NGAMPUS/6/PKL/explore/draw/draw.html");
+        $('#cont').load(drawing_url);
+    } else{
+        $('#cont').load(winner_url);
     }
 }
+
+function doBounce(element, times, distance, speed) {
+    for(i = 0; i < times; i++) {
+        element.animate({marginTop: '-='+distance},speed)
+            .animate({marginTop: '+='+distance},speed);
+    }        
+}
+
 
 // Handle fullscreen
 function fullScreen(){
@@ -71,6 +91,29 @@ function fullScreen(){
     }
 }
 
+function chooseMenu(){
+    if($('body').hasClass('show-sidebar')){ // Menu
+        let menu = $('li.menu-item.active').attr('value');
+        if(menu=='draw'){
+            $('#cont').load(menu_url+'/new');
+        } else{
+            $('.main-content').load(menu_url+'/'+menu);
+        }
+    }
+}
+
+function goToNew(){
+    $('#cont').load(menu_url+'/new');
+}
+
+function goToRecent(){
+    $('#cont').load(menu_url+'/recent');
+}
+
+function goToHistory(){
+    $('#cont').load(menu_url+'/history');
+}
+
 // Bind
 Mousetrap.bind({
     'm': openCloseMenu,
@@ -80,6 +123,7 @@ Mousetrap.bind({
     'right' : up,
     'down': down,
     'left' : down,
-    'z' : fullScreen,
-    'Z' : fullScreen,
+    'f' : fullScreen,
+    'F' : fullScreen,
+    'n' : chooseMenu,
 });

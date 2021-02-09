@@ -52,9 +52,10 @@ class EOCategoryController extends Controller
     public function store(Request $request)
     {
         unset($request['_token']);
+        $request['created_at'] = date('Y-m-d H:i:s');
         $insert = DB::table('category')->insert($request->all());
         //Redirect
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/category'),"Yohooo! The category has been added!","info");
+        CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Yohooo! The category has been added!", "info");
     }
 
     /**
@@ -66,15 +67,23 @@ class EOCategoryController extends Controller
     public function show($id)
     {
         if(Session::get('event_id')==''){
-            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard","warning");
+            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard", "warning");
         }
 
         if(!DB::table('category')->where('id', $id)->exists()){
             CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! category with id ".$id." is doesn't exist!", "warning");
         }
         $data['page_title'] = Session::get('event_name').': Detail Category';
-        $data['category'] = DB::table('category')->where('id', $id)->first();
-        $data['winner'] = DB::table('winner')->leftJoin('category', 'category.id', '=', 'winner.category_id')->where('winner.category_id', $id)->get();
+        $data['category'] = DB::table('category')
+                            ->leftJoin('winner', 'winner.category_id', 'category.id')
+                            ->select('category.*', 'winner.created_at as draw_date')
+                            ->where('category.id', $id)->first();
+        $data['winner'] = DB::table('winner')
+                            ->leftJoin('participant', 'participant.id', 'winner.participant_id')
+                            ->leftJoin('category', 'category.id', '=', 'winner.category_id')
+                            ->select('participant.*')
+                            ->where('winner.category_id', $id)
+                            ->get();
         return view('event_organizer.detail_category', $data);
     }
 
@@ -87,11 +96,11 @@ class EOCategoryController extends Controller
     public function edit($id)
     {
         if(Session::get('event_id')==''){
-            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard","warning");
+            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard", "warning");
         }
 
         if(!DB::table('category')->where('id', $id)->exists()){
-            CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! Category with id ".$id." is doesn't exist!","warning");
+            CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! Category with id ".$id." is doesn't exist!", "warning");
         }
         $data['page_title'] = Session::get('event_name').': Edit Category';
         $data['category'] = DB::table('category')->where('id', $id)->first();
@@ -109,7 +118,7 @@ class EOCategoryController extends Controller
     {
         unset($request['_token'], $request['_method']);
         DB::table('category')->where('id', $id)->update($request->all());
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/category'),"Good job! The category success updated!","info");
+        CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Good job! The category success updated!", "info");
     }
 
     /**
@@ -120,10 +129,10 @@ class EOCategoryController extends Controller
      */
     public function destroy($id)
     {   if(Session::get('event_id')==''){
-            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard","warning");
+            CRUDBooster::redirect(URL::to('eo/event'), "Hey! You must select an event to be able to access the dashboard", "warning");
         }
         if(!DB::table('category')->where('id', $id)->exists()){
-            CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! Category with id ".$id." is doesn't exist!","warning");
+            CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! Category with id ".$id." is doesn't exist!", "warning");
         }
         DB::table('category')->where('id', $id)->delete();
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category'),"Good job! The category success deleted!","info");

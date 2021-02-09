@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Mail;
 
 class EOEventController extends Controller
 {
@@ -46,9 +47,22 @@ class EOEventController extends Controller
      */
     public function store(Request $request)
     {
+        $code = date('Ym');
+        $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
+        if($event == null){
+            $code .= '0001';
+        } else{
+            $code .= str_pad(intval(substr($event->code_invoice, 7))+1, 4, '0', STR_PAD_LEFT);
+        }
+        
         unset($request['_token']);
-        $insert = DB::table('event')->insert($request->all());
-        if($insert){
+        $request['created_at'] = date('Y-m-d H:i:s');
+        $request['code_invoice'] = $code;
+        $request['payment_status'] = 'Unpaid';
+        $request['status'] = 'Non Active';
+        $request['cms_users_id'] = Session::get("admin_id");
+
+        if(DB::table('event')->insert($request->all())){
             // Handle notification
             $receiver = DB::table('cms_users')->whereIn('id_cms_privileges', [1, 3])->pluck('id');
             $config['content'] = "[New Event] '".ucfirst($request->name)."' has ben added!";
@@ -56,8 +70,26 @@ class EOEventController extends Controller
             $config['id_cms_users'] = $receiver; 
             CRUDBooster::sendNotification($config);
 
-            //Redirect
-            CRUDBooster::redirect(URL::to('eo/event'),"The event has been added! Please check your email to get the payment info","info");
+            // Send invoice email 
+            $user = Db::table('cms_users')->where('id', Session::get('admin_id'))->select('email')->first();
+            $data['email'] = $user->email;
+            $data['name'] = Session::get('admin_name');
+            $data['code'] = $code;
+            $data['date'] = date('F d, Y');
+            $data['due'] = date('F d, Y', strtotime("+1 week"));
+            $data['event_name'] = $request->input('name');
+
+            Mail::send('mail.invoice', $data, function($message) {
+                $message->to('mutiarahardiani17@gmail.com', Session::get('admin_name'))
+                        ->subject('Invoice from Draw System');
+                $message->from('mutiarahardiani17@gmail.com', 'Draw System');
+
+            });
+
+            if (Mail::failures()) {
+                CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
+            } 
+            CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! Please check your email to get the payment info", "info");
 
         }
     }
@@ -103,8 +135,10 @@ class EOEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-    //     unset($request['_token'], $request['_method']);
-    //     DB::table('event')->where('id', $id)->update($request->all());
+        if(Str::contains(URL::previous(), 'edit')){
+            unset($request['_token'], $request['_method']);
+            DB::table('event')->where('id', $id)->update($request->all());
+        } else {
             $bg_path = 'assets/uploads/background';
             $btn_path = 'assets/uploads/button';
 
@@ -125,15 +159,6 @@ class EOEventController extends Controller
                 $request->file('button_image')->move(public_path($btn_path), $data['button_image']);
             }
 
-            $request->validate([
-                'global_text_color' => 'required',
-                'hr_color' => 'required',
-                'button_background_color' => 'required',
-                'button_text_color' => 'required',
-                'button_border_color' => 'required',
-                'button_shadow_color' => 'required'
-            ]);
-
             $data['global_text_color'] = $request->input('global_text_color');
             $data['hr_color'] = $request->input('hr_color');
             $data['button_background_color'] = $request->input('button_background_color');
@@ -142,7 +167,7 @@ class EOEventController extends Controller
             $data['button_shadow_color'] = $request->input('button_shadow_color');
 
             DB::table('event')->where('id', $id)->update($data);
-
+        }
         if(Str::contains(URL::previous(), 'dashboard_event/preferences')){
             CRUDBooster::redirect(URL::previous(),"Good job! The preferences success updated!","info");
         }
@@ -174,8 +199,30 @@ class EOEventController extends Controller
         $data['participant'] = DB::table('participant')->where('event_id', $id)->get();
         $data['page_title'] = 'Dashboard '.$data['event']->name;
 
+        $data['past'] = DB::table('event')
+                    ->where('cms_users_id', Session::get('admin_id'))
+                    ->where('date_end', '>', date('Y-m-d'))
+                    ->count();
+        $data['category'] = DB::table('category')
+                            ->where('event_id', $id)
+                            ->count();
+        $data['participant'] = DB::table('participant')
+                            ->where('event_id', $id)
+                            ->count();
+        $data['winner'] = DB::table('winner')
+                            ->leftJoin('category', 'category.id', 'winner.category_id')
+                            ->where('category.event_id', $id)
+                            ->count();
+        $data['winners'] = DB::table('winner')
+                            ->leftJoin('category', 'category.id', 'winner.category_id')
+                            ->leftJoin('participant', 'participant.id', 'winner.participant_id')
+                            ->where('category.event_id', $id)
+                            ->select('participant.name')
+                            ->get();
+
         Session::put('event_id', $id);
         Session::put('event_name', $data['event']->name);
+        Session::put('event_active', $data['event']->status);
         return view('event_organizer.event_dashboard', $data);
     }
 

@@ -24,17 +24,17 @@ $(document).ready(function() {
 
     initItems();
 
-    $('#wrap-scroll').scroll(function(){
+    $('.wrap-container').scroll(function(){
         itemsScrolled = Math.ceil($(this).scrollTop() / listOpts.itemHeight);
         if ($(this).scrollTop() < 1) {
             itemsScrolled = 0;
         }
         listOpts.items.forEach(function (ele) {
-            ele.classList.remove('active');
+            ele.classList.remove('selected');
             ele.classList.remove('semi');
         });
         if (itemsScrolled < listOpts.items.length) {
-            listOpts.items[itemsScrolled].classList.add('active');
+            listOpts.items[itemsScrolled].classList.add('selected');
             listOpts.items[itemsScrolled+1].classList.add('semi');
             listOpts.items[itemsScrolled-1].classList.add('semi');
         }

@@ -358,6 +358,7 @@
 
 	    	foreach ($request->input('selected_id') as $participant_id) {
 	    		DB::table('winner')->insert([
+	    									'created_at' => date('Y-m-d H:i:s'),
 	    									'category_id' => $request->input('category_id'),
 	    									'participant_id' => $participant_id
 	    									]);
