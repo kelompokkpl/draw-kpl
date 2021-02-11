@@ -209,17 +209,29 @@ class EOEventController extends Controller
         $data['participant'] = DB::table('participant')
                             ->where('event_id', $id)
                             ->count();
-        $data['winner'] = DB::table('winner')
+        $data['winner'] = DB::table('category')
+                            ->where('category.event_id', $id)
+                            ->sum('total_winner');
+        $data['cat'] = DB::table('category')
+                            ->leftJoin('event', 'event.id', 'category.event_id')
+                            ->where('category.event_id', $id)
+                            ->select('category.name', 'category.id')
+                            ->get();
+        $data['win'] = DB::table('winner')
                             ->leftJoin('category', 'category.id', 'winner.category_id')
                             ->where('category.event_id', $id)
-                            ->count();
+                            ->leftJoin('participant', 'participant.id', 'winner.participant_id')
+                            ->select('category.id as category_id', 'participant.participant_id as id', 'participant.name')
+                            ->orderBy('category_id')
+                            ->get();
         $data['winners'] = DB::table('winner')
                             ->leftJoin('category', 'category.id', 'winner.category_id')
                             ->leftJoin('participant', 'participant.id', 'winner.participant_id')
                             ->where('category.event_id', $id)
-                            ->select('participant.name')
+                            ->select('participant.name as name', DB::raw('COUNT(*) as weight'))
+                            ->groupBy('participant.name')
                             ->get();
-
+                    
         Session::put('event_id', $id);
         Session::put('event_name', $data['event']->name);
         Session::put('event_active', $data['event']->status);

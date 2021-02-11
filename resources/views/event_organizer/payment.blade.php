@@ -101,7 +101,7 @@
                           </div>
 
                           <div class='form-group header-group-0 ' style="">
-                            <label class='control-label col-sm-2'>Transfer Date
+                            <label class='control-label col-sm-2'>Transfer
                               <span class='text-danger' title='This field is required'>*</span>
                             </label>
                             <div class="col-sm-10">
@@ -110,7 +110,6 @@
                               <p class='help-block'></p>
                             </div>
                           </div>
-
                           <div class='form-group header-group-0 ' style="">
                             <label class='control-label col-sm-2'>Photo
                               <span class='text-danger' title='This field is required'>*</span>

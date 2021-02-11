@@ -1,9 +1,8 @@
 // Handle sidebar menu
 function openCloseMenu() {
-    var menu = $('.js-menu-toggle');
+    let menu = $('.js-menu-toggle');
 
     if ($('body').hasClass('show-sidebar')) {
-        console.log('menu');
         $('body').removeClass('show-sidebar');
         menu.removeClass('active');
     } else {
@@ -22,7 +21,7 @@ function up(){
 
         $('body').find('.menu-item.active').removeClass('active')
         $('li.menu-item').eq(index-1).addClass('active')
-    }
+    }  
 }
 
 function down(){
@@ -39,6 +38,11 @@ function down(){
         if($('#ul-scroll')[0]){
             $('#ul-scroll li.selected').focus();
         }
+        // console.log('masuk')
+        if($('#category_select')[0]){
+            console.log('ada')
+            $('#category_select').focus();
+        }
     }  
 }
 
@@ -47,14 +51,16 @@ function down(){
 function goToDraw(){
     if ($('.draw-btn')[0]) {
         let category = $('#ul-scroll li.selected').attr('value');
-        url += '?category='+category;
-        // doBounce($('.draw-btn'), 3, '50px', 300); 
-        // $( ".draw.btn" ).toggle( "bounce", { times: 3 }, "slow" );
-        $('#cont').load(url);
+        let uri = url + '?category='+category;
+        $('#cont').load(uri);
     } else if ($('.draw')[0]){
         $('#cont').load(drawing_url);
     } else{
-        $('#cont').load(winner_url);
+        if($('#ul-scroll')[0]){
+            $('#cont').load(url);
+        } else{
+            $('#cont').load(winner_url);   
+        }
     }
 }
 
@@ -99,18 +105,27 @@ function chooseMenu(){
         } else{
             $('.main-content').load(menu_url+'/'+menu);
         }
+        $('body').removeClass('show-sidebar');
+        $('.js-menu-toggle').removeClass('active');
     }
 }
 
 function goToNew(){
     $('#cont').load(menu_url+'/new');
+    $('body').removeClass('show-sidebar');
+    $('.js-menu-toggle').removeClass('active');
 }
 
 function goToRecent(){
     $('#cont').load(menu_url+'/recent');
+    $('body').removeClass('show-sidebar');
+    $('.js-menu-toggle').removeClass('active');
 }
 
 function goToHistory(){
+    $("#loading").fadeIn("slow");
+    $('body').removeClass('show-sidebar');
+    $('.js-menu-toggle').removeClass('active');
     $('#cont').load(menu_url+'/history');
 }
 

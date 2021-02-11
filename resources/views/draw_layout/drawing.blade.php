@@ -15,7 +15,7 @@
 </div>
 
 	<!-- Main Content -->
-	<div class="main-content">
+	<div class="main-content ld ld-grow-rtl-in">
 		<!-- Main -->
 		<div class="main text-center font-weight-bold" id="drawing">
 			<div class="main-head">

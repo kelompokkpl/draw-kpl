@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'eo-auth' => \App\Http\Middleware\EOAuth::class,
+        'eo-log' => \App\Http\Middleware\EOLog::class,
     ];
 
     /**

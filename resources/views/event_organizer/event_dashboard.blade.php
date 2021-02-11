@@ -2,6 +2,53 @@
 
 @push('head')
  <link href="{{ asset("assets/css/highchart.css")}}" rel="stylesheet" type="text/css" />
+ <style type="text/css">
+	.wrapperr {
+	    position:relative;
+	    margin:0 auto;
+	    overflow:hidden;
+		padding:5px;
+	  	height:50px;
+	}
+
+	.list {
+	    position:absolute;
+	    left:0px;
+	    top:0px;
+	  	min-width:3000px;
+	  	margin-left:12px;
+	    margin-top:0px;
+	}
+
+	.list li{
+		display:table-cell;
+	    position:relative;
+	    text-align:center;
+	    cursor:grab;
+	    cursor:-webkit-grab;
+	    color:#efefef;
+	    vertical-align:middle;
+	}
+
+	.scroller {
+	  text-align:center;
+	  cursor:pointer;
+	  display:none;
+	  padding:7px;
+	  padding-top:11px;
+	  white-space:no-wrap;
+	  vertical-align:middle;
+	  background-color:#fff;
+	}
+
+	.scroller-right{
+	  float:right;
+	}
+
+	.scroller-left {
+	  float:left;
+	}
+ </style>
 @endpush
 
 @section('content-header')
@@ -15,7 +62,7 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-bars"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Draw Category</span>
@@ -28,7 +75,7 @@
         <!-- /.col -->
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-google-plus"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Participants</span>
@@ -45,7 +92,7 @@
 
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="ion ion-ios-cart-outline"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-trophy"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Winners</span>
@@ -60,22 +107,19 @@
       <!-- /.row -->
 
 <!-- Chart -->
-    <!-- Payment Chart -->
+<div class="row">
+	<div class="col-md-4">
+    <!-- winners wordcloud -->
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Winners</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
                   <div class="chart">
+                    @if(count($winners)>0)
                     <!-- Payment Chart Canvas -->
                     <figure class="highcharts-figure">
                       <div id="wordCloud"></div>
@@ -83,6 +127,10 @@
                         <!-- desk -->
                       </p>
                     </figure>
+                    @else
+                    <div class="text-center"><h3>Upps.. No data available!</h3>
+                     Let's go to draw!<br><br></div>
+                    @endif
                   </div>
                   <!-- /.chart-responsive -->
                 </div>
@@ -92,34 +140,61 @@
             </div>
             <!-- ./box-body -->
           </div>
+      <!-- end of winner -->
+      	</div>
 
-      <!-- end of payment chart -->
-
+      <div class="col-md-8">
       <!-- Activity Chart -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Activity Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+              <h3 class="box-title">Winners By Category</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="chart">
-                    <!-- Activity Chart Canvas -->
-                    <figure class="highcharts-figure">
-                      <div id="container"></div>
-                      <p class="highcharts-description">
-                        
-                      </p>
-                    </figure>
-                  </div>
-                  <!-- /.chart-responsive -->
+                @if(!empty($category))
+                	@if(count($cat)>4)
+        					<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
+        					<div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
+        					@endif
+      						<div class="wrapperr">
+      						    <ul class="nav nav-tabs list" id="myTab">
+      						    	@foreach($cat as $row)
+      						    		<li {{ ($loop->index==0)?'class=active':''}}><a data-toggle="tab" href="#{{$row->id}}">{{$row->name}}</a></li>
+      						    	@endforeach
+      						  </ul>
+      						  </div>
+						    <div class="tab-content">
+							   @foreach($cat as $row)
+					        <div id="{{$row->id}}" class="tab-pane fade {{($loop->index==0)?'in active':''}}">
+					            <div class="col-md-12">
+					              <table class="table table-bordered table-striped table-responsive datatables-simple">
+							          <thead>
+							            <tr>
+							            	<th style="width:150px">ID</th>
+							            	<th>Name</th>
+							            </tr>
+							          </thead>
+							          <tbody>
+							            @foreach ($win as $r)
+							            	@if($r->category_id==$row->id)
+								            <tr>
+								                <td>{{$r->id}}</td>
+								            	<td>{{$r->name}}</td>
+								            </tr>
+								            @endif
+							            @endforeach
+							          </tbody>
+							        </table>
+					            </div>
+					        </div>
+					        @endforeach
+					       </div>
+                 @else
+                  <div class="text-center"><h3>Hmm.. No data available!</h3><br><br></div>
+	               @endif
+
                 </div>
                 <!-- /.col -->
               </div>
@@ -128,6 +203,8 @@
             <!-- ./box-body -->
           </div>
     <!-- end of activity chart -->
+   		</div>
+   	</div>
 
 @endsection
 

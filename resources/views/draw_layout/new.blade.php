@@ -34,9 +34,13 @@
 			<div class="main-body text-center">
 				<div class="wrap-container" id="wrap-scroll">
 				    <ul id="ul-scroll" class="ul-scroll">
+				    	@if(count($category) < 1)
+				    		No category available
+				    	@else
 				    	@foreach ($category as $row)
 					    	<li class="{{($loop->index == 0)?'selected':''}}" value="{{$row->id}}" tabindex="-1"> <span class="item">{{$row->name}} </span> </li>
 					    @endforeach
+					    @endif
 				    </ul>
 				</div>
 
@@ -55,7 +59,9 @@
 			</div>
 
 			<div class="main-footer">
-				<button class="draw-btn draw-btn-lg" onclick="goToDraw()">Draw</button>
+				@if(count($category) > 0)
+				<button class="draw-btn draw-btn-lg ld ld-jump" onclick="goToDraw()"> Draw</button>
+				@endif
 			</div>
 		</div>
 		<!-- End of Main -->
@@ -66,9 +72,21 @@
   	setTimeout(function(){
   		$("#loading").fadeOut("slow");
   	}, 500);
+
+  	let dashboard = {!! json_encode(URL::to('/eo/dashboard_event'.'/'.Session::get('event_id'))) !!};
+	let cat = {!! json_encode(count($category)) !!};
+
+	if(cat<1){
+  		swal({   
+            title: 'Oopsie..',   
+            text: "Hmm.. all category has been drawn!",   
+            icon: 'info',   
+        });
+  	} 
+  	var url = {!! json_encode(URL::to('/eo/dashboard_event/recent')) !!};
   });
-</script>
-<script type="text/javascript">
-	var url = {!! json_encode(URL::to('/eo/dashboard_event/recent')) !!};
+
+	
+
 </script>
 <script src="{{asset('assets/js/draw.js')}}"></script> 

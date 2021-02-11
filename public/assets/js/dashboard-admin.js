@@ -13,7 +13,7 @@ Highcharts.chart('container-pie', {
         enabled: false
   },
   tooltip: {
-    pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b><br>{point.y} events'
+    pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b> <br>{point.y} events'
   },
   accessibility: {
     point: {
@@ -45,6 +45,7 @@ Highcharts.chart('container-pie', {
   }]
 });
 
+// Create the chart
 
 // Create the chart
 Highcharts.chart('container', {
@@ -110,6 +111,50 @@ Highcharts.chart('container', {
                     verticalAlign: 'bottom'
                 }
             }
+        }]
+    }
+});
+
+
+Highcharts.chart('sales', {
+  chart: {
+    type: 'line'
+  },
+  title: {
+    text: 'Sales Per Month'
+  },
+  credits: {
+        enabled: false
+  },
+  tooltip: {
+    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>Rp{point.y}</b><br/>'
+  },
+  xAxis: {
+    categories: month
+  },
+  yAxis: {
+    title: {
+      text: 'Income (Rp)'
+    }
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true
+      },
+      enableMouseTracking: true
+    }
+  },
+  series: [{
+    name: 'Income',
+    data: total
+  }],
+  responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 300
+            },
         }]
     }
 });

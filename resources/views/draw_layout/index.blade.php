@@ -44,9 +44,13 @@
 			<div class="main-body text-center">
 				<div class="wrap-container" id="wrap-scroll">
 				    <ul id="ul-scroll" class="ul-scroll">
+				    	@if(count($category) < 1)
+				    		No category available
+				    	@else
 				    	@foreach ($category as $row)
 					    	<li class="{{($loop->index == 0)?'selected':''}}" value="{{$row->id}}" tabindex="-1"> <span class="item">{{$row->name}} </span> </li>
 					    @endforeach
+					    @endif
 				    </ul>
 				</div>
 
@@ -66,7 +70,9 @@
 			</div>
 
 			<div class="main-footer">
-				<button class="draw-btn draw-btn-lg" onclick="goToDraw()"> Draw</button>
+				@if(count($category) > 0)
+				<button class="draw-btn draw-btn-lg ld ld-jump" onclick="goToDraw()"> Draw</button>
+				@endif
 			</div>
 		</div>
 		<!-- End of Main -->
@@ -78,6 +84,8 @@
 @section('script')
 <script type="text/javascript">
 	var url = {!! json_encode(URL::to('/eo/dashboard_event/recent')) !!};
+	let dashboard = {!! json_encode(URL::to('/eo/dashboard_event'.'/'.Session::get('event_id'))) !!};
+	let cat = {!! json_encode(count($category)) !!};
 </script>
 
 <script>
@@ -86,6 +94,14 @@
   		$("#loading").hide();
   		// $("#loading").fadeOut("slow");
   	}, 500);
+  	if(cat<1){
+  		swal({   
+            title: 'Oopsie..',   
+            text: "You don't have any draw category, so you can not to draw. Back to event dashboard and create a new category!", 
+            icon: 'warning',      
+        });
+        location.href=dashboard; 
+  	}
   });
 </script>
 

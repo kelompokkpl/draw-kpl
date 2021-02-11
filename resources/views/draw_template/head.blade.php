@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
 
 	<!-- Javascript -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -30,6 +31,7 @@
 	<script src="{{asset('assets/js/draw.js')}}"></script>
  	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js"></script>
+  	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{asset('assets/js/draw-shortcut.js')}}"></script>
 </head>
 
@@ -40,5 +42,16 @@
 	@if($event->hr_color!='')
 		.line-title{ background-color: {{$event->hr_color}}; }
 	@endif
+	@if($event->button_text_color!='')
+		aside .side-inner .nav-menu ul li.active a {
+		    color: {{$event->button_text_color}}!important; 
+		}
+	@endif
+	@if($event->button_background_color!='')
+	aside .side-inner .nav-menu ul li.active a {
+		background: {{$event->button_background_color}}!important;
+	}
+	@endif
+	
 </style>
 @yield('css')

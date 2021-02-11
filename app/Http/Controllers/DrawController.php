@@ -39,13 +39,16 @@ class DrawController extends Controller
     }    
 
     public function getRecent(){
-    	$category = DB::table('category')->where('id', $_GET['category'])->first();
-    	Session::put('category_id', $category->id);
-    	Session::put('category_name', ucfirst($category->name));
-
-    	$data['event'] = DB::table('event')->where('id', Session::get('event_id'))->first();
-    	$data['category'] = DB::table('category')->where('event_id', Session::get('event_id'))->get();
-    	return view('draw_layout.recent', $data);
+        if(empty($_GET['category'])){
+            $category = DB::table('category')->where('id', Session::get('category_id'))->first();
+        } else{
+            $category = DB::table('category')->where('id', $_GET['category'])->first();
+        }
+        Session::put('category_id', $category->id);
+        Session::put('category_name', ucfirst($category->name));
+        $data['event'] = DB::table('event')->where('id', Session::get('event_id'))->first();
+        $data['category'] = DB::table('category')->where('event_id', Session::get('event_id'))->get();
+        return view('draw_layout.recent', $data);
     }
 
     public function getDraw(){
