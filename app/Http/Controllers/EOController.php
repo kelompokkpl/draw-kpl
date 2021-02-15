@@ -65,16 +65,16 @@ class EOController extends Controller
         $data['date'] = array_reverse($date);
         
         $series = array();
+        $k=0;
         foreach ($event as $row) {
-            $k=0;
             for($i = 0; $i < 30; $i++){
                 if(!empty($perDay[$row->id][$data['date'][$i]])){
                     $y = $perDay[$row->id][$data['date'][$i]];
                 } else{
                     $y = 0;
                 }
-                // echo $row->id.'.'.$data['date'][$i].'<br>';
                 if(!empty($perLog[$row->id][$data['date'][$i]])){
+                    // echo $row->id.'.'.$data['date'][$i].'<br>';
                     $drilldown[$k]['name'] = $row->name.'<br>'.$data['date'][$i];
                     $drilldown[$k]['id'] = $row->id.$data['date'][$i];
                     $dataDrill = array();
@@ -86,13 +86,13 @@ class EOController extends Controller
                     $drilldown[$k]['data'] = $dataDrill;
                     
                     $k++;
-                }
 
-                $datas[$i] = ['y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]]; 
+                    $datas[$i] = ['y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]];
+                } else{
+                    $datas[$i] = ['y'=>$y];
+                } 
             }
             $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
-            
-            // dd($data['drilldown']);
         }
         $data['drilldown'] = $drilldown;
         // dd($event, $k,$log, $perLog, $drilldown);
@@ -141,45 +141,6 @@ class EOController extends Controller
         DB::table('cms_users')->where('id', Session::get('admin_id'))->update($data);
         Session::put('admin_name', $request->name);
         CRUDBooster::redirect(URL::to('eo/profile'), "Hey! your profile success updated!","success");
-    }
-
-    public function sendmail(){
-        $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
-        $code = date('Ym').str_pad(intval(substr($event->code_invoice, 7))+1, 4, '0', STR_PAD_LEFT);
-        $user = Db::table('cms_users')->where('id', Session::get('admin_id'))->select('email')->first();
-            $data['email'] = $user->email;
-            $data['name'] = Session::get('admin_name');
-            $data['code'] = $code;
-            $data['date'] = date('F d, Y');
-            $data['due'] = date('F d, Y', strtotime("+1 week"));
-            $data['event_name'] = 'name';
-        Mail::send('mail.invoice', $data, function($message) {
-            $message->to('mutiarahardiani17@gmail.com', Session::get('admin_name'))
-                    ->subject('Invoice from Draw System');
-            $message->from('mutiarahardiani17@gmail.com', 'Draw System');
-
-        });
-
-        if (Mail::failures()) {
-            return response()->Fail('Sorry! Please try again latter');
-        } else{
-            return response()->json('Yes, You have sent email to GMAIL from LARAVEL !!');
-        }
-    }
-
-    public function printPDF(){
-        $data = [
-          'title' => 'First PDF for Medium',
-          'heading' => 'Hello from 99Points.info',
-          'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'        
-            ];
-        
-        $pdf = PDF::loadView('pdf_view', $data);  
-        return $pdf->stream('medium.pdf', array('Attachment'=>false));
-    }
-
-    public function import(){
-        Excel::import(new ParticipantImport, 'part.xlsx');
     }
 
 }

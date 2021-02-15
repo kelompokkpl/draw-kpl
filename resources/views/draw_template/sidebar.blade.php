@@ -1,7 +1,7 @@
 	<!-- Sidebar -->
 	<aside class="sidebar">
       	<div class="toggle">
-        	<a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+        	<a href="#" class="burger js-menu-toggle ld ld-throw-ltr-in" data-toggle="collapse" data-target="#main-navbar" style="animation-delay: 1.7s">
               	<span></span>
             </a>
       	</div>

@@ -16,7 +16,7 @@
 </style>
 
 	<!-- Main Content -->
-	<div class="main-content" id="root">
+	<div class="main-content ld ld-fall-ttb-in" style="animation-duration:1s" id="root">
 		<!-- Main -->
 		<div class="main2 text-center font-weight-bold">
 			<div class="main-head text-left col-md-5">
@@ -31,14 +31,9 @@
 				</form>
 			</div>
 			
-			<div class="row text-lato text-center">
-				<div v-if="!winners.length" class="text-center mx-auto"><h3>No Data Available</h3></div>
-				<div class="col-md-3 mb-4 mx-auto" v-for="winner in winners">
-					@{{winner.name}}<br>
-					<span class="text-lato-thin">@{{winner.participant_id}}</span>
-				</div>
-			</div>
-		</div>		
+			@include('draw_layout.history_data')
+
+		</div>
 	</div>
 
 

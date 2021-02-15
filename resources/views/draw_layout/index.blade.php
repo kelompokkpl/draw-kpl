@@ -32,16 +32,16 @@
 </div>
 
 <!-- Main Content -->
-	<div class="main-content ld ld-fall-ttb-in" id="animate" style="animation-duration:1.5s">
+	<div class="main-content ld ld-fall-ttb-in" id="animate" style="animation-duration:1s">
 		<!-- Main -->
 		<div class="main text-center font-weight-bold">
 			<div class="main-head">
-				<h2 class="bold mb-0">New Draw</h2>
-				<hr class="line-title col-md-3 mt-2"></hr>
-				Scroll and choose one category and click Draw!
+				<h2 class="bold mb-0 ld ld-grow-btt-in" style="animation-delay:2.2s">New Draw</h2>
+				<hr class="line-title col-md-3 mt-2 ld ld-power-on" style="animation-delay:1.5s"></hr>
+				<p class="ld ld-slide-ttb-in" style="animation-delay:2.9s">Scroll and choose one category and click Draw!</p>
 			</div>
 
-			<div class="main-body text-center">
+			<div class="main-body text-center ld ld-spring-btt-in" style="animation-delay:0.9s">
 				<div class="wrap-container" id="wrap-scroll">
 				    <ul id="ul-scroll" class="ul-scroll">
 				    	@if(count($category) < 1)
@@ -71,7 +71,7 @@
 
 			<div class="main-footer">
 				@if(count($category) > 0)
-				<button class="draw-btn draw-btn-lg ld ld-jump" onclick="goToDraw()"> Draw</button>
+				<button class="draw-btn draw-btn-lg ld ld-jump ld-bounce-in" onclick="goToDraw()" style="animation-delay:3s"> Draw</button>
 				@endif
 			</div>
 		</div>

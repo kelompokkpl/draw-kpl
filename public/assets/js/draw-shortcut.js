@@ -40,26 +40,53 @@ function down(){
         }
         // console.log('masuk')
         if($('#category_select')[0]){
-            console.log('ada')
             $('#category_select').focus();
         }
     }  
 }
 
+function left(){
+    if($('#carouselExampleControls')[0]){
+        $('#carouselExampleControls').carousel('prev');
+    }
+}
+
+function right(){
+    if($('#carouselExampleControls')[0]){
+        $('#carouselExampleControls').carousel('next');
+    }
+}
+
 
 // Handle draw button
 function goToDraw(){
-    if ($('.draw-btn')[0]) {
-        let category = $('#ul-scroll li.selected').attr('value');
-        let uri = url + '?category='+category;
-        $('#cont').load(uri);
-    } else if ($('.draw')[0]){
-        $('#cont').load(drawing_url);
+    if ($('body').hasClass('show-sidebar')){
+        chooseMenu();
     } else{
-        if($('#ul-scroll')[0]){
-            $('#cont').load(url);
+        if ($('.draw-btn')[0]) {
+            if($('#redraw')[0]){
+                let category = $('#redraw').attr('value');
+                $('#cont').load(url+'?category='+category);
+            } else{
+                if($('.swal-modal')[0]){
+                } else{
+                    let category = $('#ul-scroll li.selected').attr('value');
+                    let uri = url + '?category='+category;
+                    $('#cont').load(uri);
+                }
+            }
+        } else if ($('.draw')[0]){
+            $('#cont').load(drawing_url);
         } else{
-            $('#cont').load(winner_url);   
+            if($('#ul-scroll')[0]){
+                $('#cont').load(url);
+            } else{
+                $('#cont').load(winner_url);   
+                clearInterval(showEven);
+                clearInterval(showOdd);
+                clearInterval(hideOdd);
+                clearInterval(hideEven);
+            }
         }
     }
 }
@@ -102,6 +129,8 @@ function chooseMenu(){
         let menu = $('li.menu-item.active').attr('value');
         if(menu=='draw'){
             $('#cont').load(menu_url+'/new');
+        } else if(menu=='recent') {
+            $('#cont').load(menu_url+'/'+menu);
         } else{
             $('.main-content').load(menu_url+'/'+menu);
         }
@@ -135,10 +164,16 @@ Mousetrap.bind({
     'M' : openCloseMenu,
     'enter' : goToDraw,
     'up' : up,
-    'right' : up,
+    'right' : right,
     'down': down,
-    'left' : down,
+    'left' : left,
     'f' : fullScreen,
     'F' : fullScreen,
-    'n' : chooseMenu,
+    'alt+n': goToNew,
+    'alt+N': goToNew,
+    'alt+R': goToRecent,
+    'alt+r': goToRecent,
+    'alt+H': goToHistory,
+    'alt+h': goToHistory,
+
 });

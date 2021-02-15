@@ -1,22 +1,3 @@
-<style type="text/css">
-	@if($event->background_new_draw!='')
-		.main{ background-image: url("{{asset('assets/uploads/background'.'/'.$event->background_new_draw)}}"); }
-	@endif
-	.draw-btn{
-		@if($event->button_background_color!='')
-			background-color: {{$event->button_background_color}};
-		@endif
-		@if($event->button_text_color!='')
-			color: {{$event->button_text_color}};
-		@endif
-		@if($event->button_shadow_color!='')
-			box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-  			-webkit-box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-  			-moz-box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-		@endif
-	}
-</style>
-
 <div id="loading">
   <img id="loading-image" class="mx-auto" src="{{asset('assets/image/loader1.gif')}}" alt="Loading..." />
 </div>
@@ -34,13 +15,9 @@
 			<div class="main-body text-center ld ld-spring-btt-in" style="animation-delay:1s">
 				<div class="wrap-container" id="wrap-scroll">
 				    <ul id="ul-scroll" class="ul-scroll">
-				    	@if(count($category) < 1)
-				    		No category available
-				    	@else
-				    	@foreach ($category as $row)
-					    	<li class="{{($loop->index == 0)?'selected':''}}" value="{{$row->id}}" tabindex="-1"> <span class="item">{{$row->name}} </span> </li>
-					    @endforeach
-					    @endif
+				    	<li class="selected" value="1" tabindex="-1"> <span class="item">This is Category One</span></li>
+						<li value="2" tabindex="-1"> <span class="item">I'm Category Two</span></li>
+						<li value="3" tabindex="-1"> <span class="item">Category Three</span></li>
 				    </ul>
 				</div>
 
@@ -60,9 +37,7 @@
 			</div>
 
 			<div class="main-footer">
-				@if(count($category) > 0)
 				<button class="draw-btn draw-btn-lg ld ld-jump ld-bounce-in" onclick="goToDraw()" style="animation-delay:3s"> Draw</button>
-				@endif
 			</div>
 		</div>
 		<!-- End of Main -->
@@ -75,16 +50,8 @@
   	}, 500);
 
   	let dashboard = {!! json_encode(URL::to('/eo/dashboard_event'.'/'.Session::get('event_id'))) !!};
-	let cat = {!! json_encode(count($category)) !!};
 
-	if(cat<1){
-  		swal({   
-            title: 'Oopsie..',   
-            text: "Hmm.. all category has been drawn!",   
-            icon: 'info',   
-        });
-  	} 
-  	var url = {!! json_encode(URL::to('/eo/dashboard_event/recent')) !!};
+  	var url = {!! json_encode(URL::to('/recent')) !!};
   });
 
 </script>

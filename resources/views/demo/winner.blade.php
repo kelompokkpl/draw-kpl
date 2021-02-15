@@ -1,28 +1,9 @@
-
-<style type="text/css">
-	@if($event->background_recent_draw!='')
-		.main{ background-image: url("{{asset('assets/uploads/background'.'/'.$event->background_recent_draw)}}"); }
-	@endif
-	.draw-btn{
-		@if($event->button_background_color!='')
-			background-color: {{$event->button_background_color}};
-		@endif
-		@if($event->button_text_color!='')
-			color: {{$event->button_text_color}};
-		@endif
-		@if($event->button_shadow_color!='')
-			box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-  			-webkit-box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-  			-moz-box-shadow: 0 7px 10px 0 {{$event->button_shadow_color}};
-		@endif
-	}
-</style>
 <div id="loading">
   <img id="loading-image" src="{{asset('assets/image/loader1.gif')}}" alt="Loading..." />
 </div>
 
 	<!-- Main Content -->
-	<div class="main-content" id="main-content">
+	<div class="main-content" id="main-content" data-intro='Click Redraw button or press Enter if you want to Redraw'>
 
 		<div class="head">
 			<button class="draw-btn" id="redraw" onclick="goToDraw()" value="{{Session::get('category_id')}}">Re-draw</button>
@@ -45,8 +26,8 @@
 						<div class="row text-lato text-center" style="padding: 0">
 				@endif
 				<div class="col-md-3 mb-4 mx-auto" style="display: inline-block;">
-					{{$row->name}}<br>
-					<span class="text-lato-thin">{{$row->participant_id}}</span>
+					{{$row['name']}}<br>
+					<span class="text-lato-thin">{{$row['participant_id']}}</span>
 				</div>
 
 				@if($i%20==0)
@@ -60,7 +41,7 @@
 		</div>
 	</div>
 			
-			@if(count(Session::get('winners'))>20)
+			@if(count(Session::get('demo_winners'))>20)
 			<div class="main-footer ld ld-zoom-in" style="animation-delay: 2s; position:absolute!important; bottom: 5%!important; left:42.75%">
 				<a class="" href="#carouselExampleControls" role="button" data-slide="prev">
 				    <button class="draw-btn">Prev</button>
@@ -84,6 +65,7 @@
 	        setInterval(stopConfetti,5000);
 	        setTimeout(function(){
 		  		$("#loading").fadeOut("slow");
+		  		introJs().start();
 		  	}, 500);
 	    });
 	</script>

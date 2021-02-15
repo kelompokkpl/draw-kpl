@@ -5,7 +5,7 @@ var hideOdd;
 
 function randomParticipant(id) {
 	let random = Math.floor(Math.random() * countParticipant);
-	let show = participant[random].name + '<br>' + participant[random].participant_id;
+	let show = participant[random].name + '<br><span class="text-lato-thin">' + participant[random].participant_id + '</span>';
  	$("#part"+id).html(show);
 }
 
@@ -78,16 +78,11 @@ function stop(){
 	for (let i = 0; i < countParticipant; i++) {
 		$("#part"+i).html(' ');
 	}
-	clearInterval(showEven);
-	clearInterval(showOdd);
-	clearInterval(hideOdd);
-	clearInterval(hideEven);
-	$('body').load(winner_url);	
 }
 
 // Bind
 Mousetrap.bind({
-    'space': stop,
+    'enter': stop,
 });
 
 $(function() {

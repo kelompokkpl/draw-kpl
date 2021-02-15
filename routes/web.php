@@ -12,10 +12,6 @@ use crocodicstudio\crudbooster\controllers\AdminController as AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('draw_layout.index');
-});
-
 // Admin & Superadmin
 Route::prefix('admin')->group(function () {
 	// Preference (Event Module)
@@ -40,8 +36,8 @@ Route::prefix('admin')->group(function () {
 
 
 // Event Organizer
-Route::get('eo/login', 'EOController@getLogin')->name('getLoginEO');
-Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
+Route::get('', 'EOController@getLogin')->name('getLoginEO');
+Route::group(['middleware' => ['eo-auth', 'eo-log'], 'prefix' => 'eo'], function () {
 	Route::get('/', 'EOController@getIndex');
 	Route::get('profile', 'EOController@getProfile')->name('getEOProfile');
 	Route::post('profile', 'EOController@updateProfile')->name('updateProfile');
@@ -52,6 +48,7 @@ Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 	Route::get('dashboard_event/participant_delete/{id}', 'EOParticipantController@destroy');
 	Route::get('dashboard_event/preferences', 'EOEventController@getPreferences');
 
+	// Draw
 	Route::get('dashboard_event/draw', 'DrawController@getIndex');
 	Route::get('dashboard_event/recent', 'DrawController@getRecent');
 	Route::get('dashboard_event/drawing', 'DrawController@getDraw');
@@ -59,13 +56,6 @@ Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 	Route::get('dashboard_event/winners/{id}', 'DrawController@getWinnerByCategory');
 	Route::get('dashboard_event/history', 'DrawController@getHistory');
 	Route::get('dashboard_event/new', 'DrawController@getNew');
-
-	Route::get('dashboard_event/draww', 'DrawwController@getIndex');
-	Route::get('dashboard_event/recentt', 'DrawwController@getRecent');
-	Route::get('dashboard_event/drawingg', 'DrawwController@getDraw');
-	Route::get('dashboard_event/winnerr', 'DrawwController@getWinner');
-	Route::get('dashboard_event/winnerss/{id}', 'DrawwController@getWinnerByCategory');
-	Route::get('dashboard_event/historyy', 'DrawwController@getHistory');
 
 	Route::get('dashboard_event/print_invoice/{id}', 'PaymentController@printInvoice')->name('printInvoice');
 	Route::get('payment/cancel/{id}', 'PaymentController@cancelTransaction');
@@ -82,6 +72,12 @@ Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 	Route::get('dashboard_event/participant/import', 'EOParticipantController@getImportView');
 	Route::post('dashboard_event/participant/import', 'EOParticipantController@import')->name('importParticipant');
 
+	// Mail to Winner
+	Route::get('dashboard_event/mails', 'EOMailsController@index');
+	Route::get('dashboard_event/mails/create', 'EOMailsController@create');
+	Route::post('dashboard_event/mails/create', 'EOMailsController@store');
+	Route::get('dashboard_event/mails/{id}', 'EOMailsController@show')->name('mails.show');
+
 	// Resources
 	Route::resources([
 	    'event' => 'EOEventController',
@@ -96,6 +92,12 @@ Route::group(['middleware' => ['eo-auth'], 'prefix' => 'eo'], function () {
 	});
 });
 
-Route::get('sendgmail', 'EOController@sendmail');
-Route::get('print', 'EOController@printPDF');
-Route::get('import', 'EOController@import');
+// Demo
+Route::get('demo', 'DemoController@getIndex');
+Route::get('recent', 'DemoController@getRecent');
+Route::get('drawing', 'DemoController@getDraw');
+Route::get('winner', 'DemoController@getWinner');
+Route::get('winners', 'DemoController@getWinners');
+Route::get('winners/{id}', 'DemoController@getWinnerByCategory');
+Route::get('history', 'DemoController@getHistory');
+Route::get('new', 'DemoController@getNew');

@@ -71,7 +71,7 @@ class EOParticipantController extends Controller
             CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Hey! Participant with id ".$id." is doesn't exist!","warning");
         }
         DB::table('participant')->where('id', $id)->delete();
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'),"Good job! The participant success deleted!","info");
+        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Good job! The participant success deleted!", "info");
     }
 
     public function getImportView(){
@@ -80,6 +80,6 @@ class EOParticipantController extends Controller
 
     public function import(Request $request){
         Excel::import(new ParticipantImport, request()->file('participant'));
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "success");
+        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
     }
 }

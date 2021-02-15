@@ -58,7 +58,7 @@ Highcharts.chart('container', {
         enabled: false
   },
   subtitle: {
-    text: 'Click the columns to view details.'
+    text: 'Click the point to view details.'
   },
   accessibility: {
     announceNewData: {

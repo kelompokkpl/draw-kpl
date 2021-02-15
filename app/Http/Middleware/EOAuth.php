@@ -18,7 +18,7 @@ class EOAuth
     public function handle($request, Closure $next)
     {
         if(Session::get('admin_id')==''){
-            return redirect(URL::to('eo/login'));
+            return redirect(URL::to(''));
         } else {
             if(Session::get('admin_privileges') !=2 ){
                 return redirect(URL::to('admin'));

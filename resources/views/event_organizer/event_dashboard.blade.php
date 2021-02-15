@@ -107,8 +107,6 @@
       <!-- /.row -->
 
 <!-- Chart -->
-<div class="row">
-	<div class="col-md-4">
     <!-- winners wordcloud -->
           <div class="box box-success">
             <div class="box-header with-border">
@@ -141,9 +139,7 @@
             <!-- ./box-body -->
           </div>
       <!-- end of winner -->
-      	</div>
 
-      <div class="col-md-8">
       <!-- Activity Chart -->
           <div class="box box-info">
             <div class="box-header with-border">
@@ -152,7 +148,8 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
                 @if(!empty($category))
                 	@if(count($cat)>4)
         					<div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
@@ -168,12 +165,15 @@
 						    <div class="tab-content">
 							   @foreach($cat as $row)
 					        <div id="{{$row->id}}" class="tab-pane fade {{($loop->index==0)?'in active':''}}">
-					            <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+					            <div class="col-md-8">
 					              <table class="table table-bordered table-striped table-responsive datatables-simple">
 							          <thead>
 							            <tr>
 							            	<th style="width:150px">ID</th>
 							            	<th>Name</th>
+                            <th>Email</th>
 							            </tr>
 							          </thead>
 							          <tbody>
@@ -181,13 +181,16 @@
 							            	@if($r->category_id==$row->id)
 								            <tr>
 								                <td>{{$r->id}}</td>
-								            	<td>{{$r->name}}</td>
+								                <td>{{$r->name}}</td>
+                                <td>{{$r->email}}</td>
 								            </tr>
 								            @endif
 							            @endforeach
 							          </tbody>
 							        </table>
 					            </div>
+                      <div class="col-md-2"></div>
+                    </div>
 					        </div>
 					        @endforeach
 					       </div>
@@ -203,8 +206,6 @@
             <!-- ./box-body -->
           </div>
     <!-- end of activity chart -->
-   		</div>
-   	</div>
 
 @endsection
 

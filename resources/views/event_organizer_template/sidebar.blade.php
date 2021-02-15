@@ -47,6 +47,10 @@
                             <span>Payment</span> 
                         </a>
                     </li>
+                    <li class="{{ (Str::contains(URL::current(), 'demo')) ? 'active' : '' }}">
+                        <a href='{{URL::to('demo')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><button class="btn btn-success" style="width: 90%"><i class='fa fa-laptop'></i>
+                        <span>Draw Demo</span></button> </a>
+                    </li>
                 @else
                     <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
                         <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
@@ -77,6 +81,10 @@
                     <li class="{{ (Str::contains(URL::current(), 'category_disabled')) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/category_disabled')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-ban'></i>
                         <span>Category Disabled</span> </a>
+                    </li>
+                    <li class="{{ (Str::contains(URL::current(), 'mails')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/dashboard_event/mails')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-envelope'></i>
+                        <span>Mail to Winners</span> </a>
                     </li>
                     <li class="{{ (Str::contains(URL::current(), 'preferences')) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/preferences')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-gear'></i>

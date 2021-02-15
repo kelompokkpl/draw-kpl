@@ -32,12 +32,12 @@
     <link rel='stylesheet' href='{{asset("vendor/crudbooster/assets/css/main.css")}}'/>
     <style type="text/css">
         .login-page, .register-page {
-            /*background: {{ CRUDBooster::getSetting("login_background_color")?:'#dddddd'}} url('{{ CRUDBooster::getSetting("login_background_image")?asset(CRUDBooster::getSetting("login_background_image")):asset('vendor/crudbooster/assets/bg_blur3.jpg') }}');*/
-            background: #fff;
+            background: {{ CRUDBooster::getSetting("login_background_color")?:'#dddddd'}} url('{{ CRUDBooster::getSetting("login_background_image")?asset(CRUDBooster::getSetting("login_background_image")):asset('vendor/crudbooster/assets/bg_blur3.jpg') }}');
+            /*background: #fff;*/
             color: {{ CRUDBooster::getSetting("login_font_color")?:'#ffffff' }}  !important;
-            /*background-repeat: no-repeat;
+            background-repeat: no-repeat;
             background-position: center;
-            background-size: cover;*/
+            background-size: cover;
         }
 
         .login-box, .register-box {
@@ -46,7 +46,8 @@
 
         .login-box-body {
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
-            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            background: #fff;
             color: {{ CRUDBooster::getSetting("login_font_color")?:'#666666' }}  !important;
         }
 

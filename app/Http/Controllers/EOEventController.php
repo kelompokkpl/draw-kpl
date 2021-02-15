@@ -216,12 +216,13 @@ class EOEventController extends Controller
                             ->leftJoin('event', 'event.id', 'category.event_id')
                             ->where('category.event_id', $id)
                             ->select('category.name', 'category.id')
+                            ->orderBy('category.name')
                             ->get();
         $data['win'] = DB::table('winner')
                             ->leftJoin('category', 'category.id', 'winner.category_id')
                             ->where('category.event_id', $id)
                             ->leftJoin('participant', 'participant.id', 'winner.participant_id')
-                            ->select('category.id as category_id', 'participant.participant_id as id', 'participant.name')
+                            ->select('category.id as category_id', 'participant.participant_id as id', 'participant.name', 'participant.email')
                             ->orderBy('category_id')
                             ->get();
         $data['winners'] = DB::table('winner')
