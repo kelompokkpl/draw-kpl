@@ -21,11 +21,13 @@ class EOEventController extends Controller
     public function index()
     {
         $data['page_title'] = 'EO Panel: Event';
-        $data['event'] = DB::table('event')->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
-                                           ->select('event.*', 'cms_users.name as user_name')
-                                           ->where('event.cms_users_id', Session::get('admin_id'))
-                                           ->whereNull('deleted_at')
-                                           ->get();
+        $data['event'] = DB::table('event')
+                            ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                            ->select('event.*', 'cms_users.name as user_name')
+                            ->where('event.cms_users_id', Session::get('admin_id'))
+                            ->whereNull('deleted_at')
+                            ->get();
+
         return view('event_organizer.event', $data);
     }
 
@@ -121,6 +123,7 @@ class EOEventController extends Controller
         if(!DB::table('event')->where('cms_users_id',Session::get('admin_id'))->where('id', $id)->exists()){
             CRUDBooster::redirect(URL::to('eo/event'), "Hey! Event with id ".$id." is doesn't exist!","warning");
         }
+
         $data['page_title'] = 'EO Panel: Edit Event';
         $data['event'] = DB::table('event')->where('id', $id)->first();
         return view('event_organizer.edit_event', $data);
@@ -200,9 +203,9 @@ class EOEventController extends Controller
         $data['page_title'] = 'Dashboard '.$data['event']->name;
 
         $data['past'] = DB::table('event')
-                    ->where('cms_users_id', Session::get('admin_id'))
-                    ->where('date_end', '>', date('Y-m-d'))
-                    ->count();
+                            ->where('cms_users_id', Session::get('admin_id'))
+                            ->where('date_end', '>', date('Y-m-d'))
+                            ->count();
         $data['category'] = DB::table('category')
                             ->where('event_id', $id)
                             ->count();

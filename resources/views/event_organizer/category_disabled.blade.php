@@ -2,7 +2,6 @@
 @extends('event_organizer_template.eo_template')
 
 @section('content-header')
-
         <section class="content-header">
             <h1> <i class='fa fa-bars'></i> Category Disabled &nbsp;&nbsp;
 
@@ -63,5 +62,4 @@
       </table>
     </div>
 </div>
-
 @endsection

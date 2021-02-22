@@ -20,9 +20,9 @@
 			<div class="main-body text-center ld ld-spring-btt-in" style="animation-delay:0.9s">
 				<div class="wrap-container" id="wrap-scroll" data-step="5" data-intro='This is the category option. Scroll or press the up or down to ride it' data-position="top">
 				    <ul id="ul-scroll" class="ul-scroll">
-						<li class="selected" value="1" tabindex="-1"> <span class="item">This is Category One</span></li>
-						<li value="2" tabindex="-1"> <span class="item">I'm Category Two</span></li>
-						<li value="3" tabindex="-1"> <span class="item">Category Three</span></li>
+						<li class="selected" value="1" tabindex="-1" id="0"> <span class="item">This is Category One</span></li>
+						<li value="2" tabindex="-1" id="1"> <span class="item">I'm Category Two</span></li>
+						<li value="3" tabindex="-1" id="2"> <span class="item">Category Three</span></li>
 				    </ul>
 				</div>
 

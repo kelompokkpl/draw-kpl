@@ -81,10 +81,11 @@ class EOMailsController extends Controller
                 "first"=>$winners_email[0],
                 "bcc"=>array_slice($winners_email, 1)
             ];
+            
             dispatch(new SendEmailJob($details));
             $request['created_at'] = date('Y-m-d H:i:s');
             $insert = DB::table('email')->insert($request->all());
-            //Redirect
+            
             CRUDBooster::redirect(URL::to('eo/dashboard_event/mails'), "Yippiee! Mails has been sent! It took a while to reach the recipient.", "info");
         }
     }

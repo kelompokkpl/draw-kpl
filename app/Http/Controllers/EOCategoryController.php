@@ -23,8 +23,9 @@ class EOCategoryController extends Controller
         }
 
         $data['page_title'] = Session::get('event_name').': Category';
-        $data['category'] = DB::table('category')->where('category.event_id', Session::get('event_id'))
-                                                 ->get();
+        $data['category'] = DB::table('category')
+                                ->where('category.event_id', Session::get('event_id'))
+                                ->get();
         return view('event_organizer.category', $data);
     }
 
@@ -54,7 +55,7 @@ class EOCategoryController extends Controller
         unset($request['_token']);
         $request['created_at'] = date('Y-m-d H:i:s');
         $insert = DB::table('category')->insert($request->all());
-        //Redirect
+
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Yohooo! The category has been added!", "info");
     }
 

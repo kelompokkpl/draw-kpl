@@ -28,7 +28,7 @@ class MailsToWinner extends Mailable
      */
     public function build()
     {
-        return $this->from('mutiarahardiani17@gmail.com', $this->details['event'])
+        return $this->from('draw.eventy@gmail.com', $this->details['event'])
                     ->subject($this->details['title'])
                     ->view('mail.winner')->with("details", $this->details);
     }

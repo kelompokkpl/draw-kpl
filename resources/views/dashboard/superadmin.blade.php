@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-bars"></i></span>
+            <span class="info-box-icon bg-blue"><i class="fa fa-bars"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Event</span>
@@ -20,7 +20,7 @@
         <!-- /.col -->
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-credit-card"></i></span>
+            <span class="info-box-icon bg-blue"><i class="fa fa-credit-card"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Payment Transactions</span>
@@ -37,7 +37,7 @@
 
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
+            <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Total Payment</span>
@@ -55,7 +55,7 @@
 	<div class="row">
 		<div class="col-md-4">
     <!-- Payment Chart -->
-          <div class="box box-success">
+          <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Upcoming Event Payment Chart</h3>
             </div>
@@ -86,7 +86,7 @@
 
       	<div class="col-md-8">
       		<!-- Sales Chart -->
-          <div class="box box-danger">
+          <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Sales Chart</h3>
             </div>
@@ -99,7 +99,6 @@
                     <figure class="highcharts-figure">
                       <div id="sales"></div>
                       <p class="highcharts-description">
-                        
                       </p>
                     </figure>
                   </div>
@@ -129,7 +128,6 @@
                     <figure class="highcharts-figure">
                       <div id="container"></div>
                       <p class="highcharts-description">
-                        
                       </p>
                     </figure>
                   </div>
@@ -148,7 +146,6 @@
 @push('bottom')
 <script type="text/javascript">
  	let payment = {!! json_encode($pay_chart) !!}
-  	let date = {!! json_encode($date) !!}
   	let series = {!! json_encode($series) !!}
   	let drillDown = {!! json_encode($drilldown) !!}
   	let income = {!! json_encode($income) !!}

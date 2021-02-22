@@ -52,7 +52,7 @@ Highcharts.chart('container', {
     type: 'line'
   },
   title: {
-    text: 'Event Organizer Activities Per Event'
+    text: 'Event Activities'
   },
   credits: {
         enabled: false
@@ -66,7 +66,8 @@ Highcharts.chart('container', {
     }
   },
   xAxis: {
-    categories: date,
+    // categories: date,
+    type: 'category'
   },
   yAxis: {
     title: {

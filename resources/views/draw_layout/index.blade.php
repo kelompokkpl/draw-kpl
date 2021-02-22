@@ -48,12 +48,12 @@
 				    		No category available
 				    	@else
 				    	@foreach ($category as $row)
-					    	<li class="{{($loop->index == 0)?'selected':''}}" value="{{$row->id}}" tabindex="-1"> <span class="item">{{$row->name}} </span> </li>
+					    	<li class="{{($loop->index == 0)?'selected':''}}" value="{{$row->id}}" tabindex="-1" id="{{ $loop->index }}"> <span class="item">{{$row->name}} </span> </li>
 					    @endforeach
 					    @endif
 				    </ul>
 				</div>
-
+				
 				<!-- Mask -->
 				<svg>
 					<defs>

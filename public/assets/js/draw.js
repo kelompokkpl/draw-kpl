@@ -35,8 +35,8 @@ $(document).ready(function() {
         });
         if (itemsScrolled < listOpts.items.length) {
             listOpts.items[itemsScrolled].classList.add('selected');
-            listOpts.items[itemsScrolled+1].classList.add('semi');
-            listOpts.items[itemsScrolled-1].classList.add('semi');
+            listOpts.items[(itemsScrolled+1)].classList.add('semi');
+            listOpts.items[(itemsScrolled-1)].classList.add('semi');
         }
         if (itemsScrolled > listOpts.items.length - 3) {
             for (_x = 0; _x <= itemsMax - 1; _x++) {

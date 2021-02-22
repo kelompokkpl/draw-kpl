@@ -43,7 +43,7 @@ class EOController extends Controller
                             'unpaid' => $unpaid
                            ];
         $log = DB::select('SELECT log.url as path, log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" AND cms_users_id = "'.Session::get('admin_id').'" GROUP BY date, path, event');
-        // dd($log);
+        
         $eventPerDay = DB::select('SELECT log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" AND cms_users_id = "'.Session::get('admin_id').'" GROUP BY date, event ORDER BY event');
         foreach ($eventPerDay as $row) {
             $perDay[$row->event][$row->date] = $row->y;
@@ -76,9 +76,9 @@ class EOController extends Controller
                 if(!empty($perLog[$row->id][$data['date'][$i]])){
                     // echo $row->id.'.'.$data['date'][$i].'<br>';
                     $drilldown[$k]['name'] = $row->name.'<br>'.$data['date'][$i];
+                    $drilldown[$k]['type'] = 'column';
                     $drilldown[$k]['id'] = $row->id.$data['date'][$i];
                     $dataDrill = array();
-                    // echo '->'.$row->name.$data['date'][$i].'-'.count($perLog[$row->id][$data['date'][$i]]).' ';
                     for ($n=0; $n < count($perLog[$row->id][$data['date'][$i]]); $n++) { 
                         $dataDrill[] = [$perLog[$row->id][$data['date'][$i]][$n][0], $perLog[$row->id][$data['date'][$i]][$n][1]];   
                     }
@@ -87,16 +87,14 @@ class EOController extends Controller
                     
                     $k++;
 
-                    $datas[$i] = ['y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]];
+                    $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]];
                 } else{
-                    $datas[$i] = ['y'=>$y];
+                    $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y];
                 } 
             }
             $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
         }
         $data['drilldown'] = $drilldown;
-        // dd($event, $k,$log, $perLog, $drilldown);
-        // dd($data['series'], $log, $data['drilldown']);
 
     	return view('event_organizer.index', $data);
     }
@@ -134,10 +132,10 @@ class EOController extends Controller
         if($request->password!=''){
             $data['password'] = Hash::make($request->password);
         }
-        // dd($request->all());
+
         $data['name'] = $request->name;
         $data['email'] = $request->email;
-        // dd($data);
+
         DB::table('cms_users')->where('id', Session::get('admin_id'))->update($data);
         Session::put('admin_name', $request->name);
         CRUDBooster::redirect(URL::to('eo/profile'), "Hey! your profile success updated!","success");

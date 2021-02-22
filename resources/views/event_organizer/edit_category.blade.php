@@ -4,16 +4,14 @@
 @section('content-header')
         <section class="content-header">
             <h1> <i class='fa fa-bars'></i> Category &nbsp;&nbsp;
-
               <a href="{{URL::to('eo/dashboard_event/category')}}" id='btn_show_data' class="btn btn-sm btn-primary" title="Show Data">
                   <i class="fa fa-table"></i> Show Data
               </a>
-
             </h1>
-                <ol class="breadcrumb">
-                    <li><a href="{{URL::to('eo/dashboard_event/category')}}"><i class="fa fa-bars"></i> Category</a></li>
-                    <li class="active">Edit</li>
-                </ol>
+            <ol class="breadcrumb">
+              <li><a href="{{URL::to('eo/dashboard_event/category')}}"><i class="fa fa-bars"></i> Category</a></li>
+              <li class="active">Edit</li>
+            </ol>
         </section>
 @endsection
 

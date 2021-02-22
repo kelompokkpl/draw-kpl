@@ -55,22 +55,20 @@
 
           @include('event_organizer.participant_data')
 
-
           <!-- ADD A PAGINATION -->
-          <p>{!! urldecode(str_replace("/?","?",$participant->appends(Request::all())->render())) !!}</p>
+          <!-- <p>urldecode(str_replace("/?","?",$participant->appends(Request::all())->render()))</p> -->
       </form>
     </div>
 </div>
 @endsection
 
 @prepend('bottom')
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js"></script>
-
 <script type="text/javascript">
-  var basepath = {!! json_encode(URL::to('/eo')) !!};
-  var page = 'category_disabled';
+    var basepath = {!! json_encode(URL::to('/eo')) !!};
+    var page = 'category_disabled';
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js"></script>
 <script src="{{ asset ('assets/js/eo_selected_participant.js')}}"></script>
 @endprepend

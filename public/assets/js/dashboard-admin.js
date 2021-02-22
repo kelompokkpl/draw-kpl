@@ -67,12 +67,7 @@ Highcharts.chart('container', {
     }
   },
   xAxis: {
-    categories: date,
-  },
-  yAxis: {
-    title: {
-      text: 'Total of activity'
-    }
+    type: 'category'
 
   },
   legend: {

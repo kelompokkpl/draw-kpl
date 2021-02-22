@@ -22,7 +22,7 @@ class DrawController extends Controller
                             ->where('event_id', Session::get('event_id'))
                             ->where('is_draw', 0)
                             ->get();
-        // dd(Session::all());
+
     	return view('draw_layout.index', $data);
 
     }
@@ -33,7 +33,7 @@ class DrawController extends Controller
                             ->where('event_id', Session::get('event_id'))
                             ->where('is_draw', 0)
                             ->get();
-        // dd(Session::all());
+
         return view('draw_layout.new', $data);
 
     }    
@@ -48,6 +48,7 @@ class DrawController extends Controller
         Session::put('category_name', ucfirst($category->name));
         $data['event'] = DB::table('event')->where('id', Session::get('event_id'))->first();
         $data['category'] = DB::table('category')->where('event_id', Session::get('event_id'))->get();
+
         return view('draw_layout.recent', $data);
     }
 
@@ -134,6 +135,7 @@ class DrawController extends Controller
                             ->where('event_id', Session::get('event_id'))
                             ->orderBy('name')
                             ->get();
+
         return view('draw_layout.history', $data);   
     }
 
@@ -143,6 +145,7 @@ class DrawController extends Controller
                     ->leftJoin('participant', 'participant.id', 'winner.participant_id')
                     ->select('participant.name as name', 'winner.id', 'participant.participant_id')
                     ->get();
+                    
         return json_encode($data);
     }
 }

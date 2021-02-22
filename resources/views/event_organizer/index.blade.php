@@ -11,11 +11,12 @@
 @endsection
 
 @section('content')
+
 <!-- Total -->
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-bars"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-bars"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Event</span>
@@ -32,7 +33,7 @@
 
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-arrow-circle-left"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-arrow-circle-left"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Past Event</span>
@@ -63,7 +64,7 @@
       <div class="row">
         <div class="col-md-8">
       <!-- Activity Chart -->
-          <div class="box box-info">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Activity Chart</h3>
             </div>
@@ -128,7 +129,6 @@
 @push('bottom')
 <script type="text/javascript">
   let payment = {!! json_encode($payment) !!}
-  let date = {!! json_encode($date) !!}
   let series = {!! json_encode($series) !!}
   let drillDown = {!! json_encode($drilldown) !!}
 </script>

@@ -35,8 +35,11 @@ class EOCategoryDisabledController extends Controller
                                 ->leftJoin('event','event.id','=','participant.event_id')
                                 ->select('participant.*', 'event.id as event_id', 'event.name as event_name')
                                 ->orderby('id','desc')
-                                ->paginate(10);
-        $data['category'] = DB::table('category')->where('event_id', Session::get('event_id'))->orderby('name','asc')->get();
+                                ->get();
+        $data['category'] = DB::table('category')
+                                ->where('event_id', Session::get('event_id'))
+                                ->where('is_draw', 0)
+                                ->orderby('name','asc')->get();
 
         return view('event_organizer.add_selected_participant', $data);
     }
@@ -70,6 +73,7 @@ class EOCategoryDisabledController extends Controller
                             'participant_id' => $participant_id
                         ]);
         }
+        
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category_disabled'), "The Participant success add to disabled list !","info");
     }
 

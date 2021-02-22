@@ -62,7 +62,7 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-bars"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-bars"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Draw Category</span>
@@ -92,7 +92,7 @@
 
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-trophy"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-trophy"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Winners</span>
@@ -141,7 +141,7 @@
       <!-- end of winner -->
 
       <!-- Activity Chart -->
-          <div class="box box-info">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Winners By Category</h3>
             </div>

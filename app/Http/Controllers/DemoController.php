@@ -46,6 +46,7 @@ class DemoController extends Controller
         }
         Session::put('demo_category_id', $category['id']);
         Session::put('demo_category_name', $category['name']);
+
         return view('demo.recent');
     }
 
@@ -91,7 +92,6 @@ class DemoController extends Controller
             } else{
                 $data['winner'][0] = Session::get('demo_parts')[Session::get('demo_winners')];
             }
-            // dd(Session::all(), $data['winner']);
 
             return view('demo.winner', $data);
         }
