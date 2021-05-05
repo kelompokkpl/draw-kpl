@@ -6,6 +6,7 @@
 <!-- Total -->
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('admin/event')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-blue"><i class="fa fa-bars"></i></span>
 
@@ -16,9 +17,11 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('admin/payment')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-blue"><i class="fa fa-credit-card"></i></span>
 
@@ -29,6 +32,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
 
@@ -36,6 +40,7 @@
         <div class="clearfix visible-sm-block"></div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('admin/payment')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
 
@@ -46,6 +51,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
       </div>
