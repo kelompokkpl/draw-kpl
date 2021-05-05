@@ -21,12 +21,40 @@ class EOEventController extends Controller
     public function index()
     {
         $data['page_title'] = 'EO Panel: Event';
-        $data['event'] = DB::table('event')
-                            ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
-                            ->select('event.*', 'cms_users.name as user_name')
-                            ->where('event.cms_users_id', Session::get('admin_id'))
-                            ->whereNull('deleted_at')
-                            ->get();
+
+        if(empty($_GET['held'])){
+            $data['event'] = DB::table('event')
+                ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                ->select('event.*', 'cms_users.name as user_name')
+                ->where('event.cms_users_id', Session::get('admin_id'))
+                ->whereNull('deleted_at')
+                ->get();
+        } else{
+            if($_GET['held']=='past'){
+                $data['event'] = DB::table('event')
+                    ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                    ->select('event.*', 'cms_users.name as user_name')
+                    ->where('event.cms_users_id', Session::get('admin_id'))
+                    ->where('date_end', '<', date('Y-m-d'))
+                    ->whereNull('deleted_at')
+                    ->get();
+            } elseif($_GET['held']=='upcoming'){
+                $data['event'] = DB::table('event')
+                    ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                    ->select('event.*', 'cms_users.name as user_name')
+                    ->where('event.cms_users_id', Session::get('admin_id'))
+                    ->where('date_end', '>=', date('Y-m-d'))
+                    ->whereNull('deleted_at')
+                    ->get();
+            } else{
+                $data['event'] = DB::table('event')
+                    ->leftJoin('cms_users', 'event.cms_users_id', '=', 'cms_users.id')
+                    ->select('event.*', 'cms_users.name as user_name')
+                    ->where('event.cms_users_id', Session::get('admin_id'))
+                    ->whereNull('deleted_at')
+                    ->get();
+            }
+        }
 
         return view('event_organizer.event', $data);
     }

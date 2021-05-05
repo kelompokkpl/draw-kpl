@@ -15,6 +15,7 @@
 <!-- Total -->
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('eo/event')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-bars"></i></span>
 
@@ -25,6 +26,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
 
@@ -32,6 +34,7 @@
         <div class="clearfix visible-sm-block"></div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('eo/event?held=past')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-arrow-circle-left"></i></span>
 
@@ -42,10 +45,12 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
 
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('eo/event?held=upcoming')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-location-arrow"></i></span>
 
@@ -56,6 +61,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
       </div>
