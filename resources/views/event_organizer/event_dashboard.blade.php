@@ -61,6 +61,7 @@
 <!-- Total -->
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('eo/dashboard_event/category')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-bars"></i></span>
 
@@ -71,9 +72,11 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
         <div class="col-md-4 col-sm-6 col-xs-12">
+          <a href="{{URL::to('eo/dashboard_event/participant')}}" style="color: black">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 
@@ -84,6 +87,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
+          </a>
         </div>
         <!-- /.col -->
 
