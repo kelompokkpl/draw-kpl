@@ -59,6 +59,7 @@ class EOController extends Controller
 
         $event = DB::table('event')
                     ->where('cms_users_id', Session::get('admin_id'))
+                    ->whereNull('deleted_at')
                     ->select('id', 'name')
                     ->get();
         $date = array();
