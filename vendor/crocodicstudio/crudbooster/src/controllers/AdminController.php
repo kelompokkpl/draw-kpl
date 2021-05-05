@@ -118,7 +118,7 @@ class AdminController extends CBController
         }
         $data['drilldown'] = $drilldown;
 
-        $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(created_at) as month FROM payment WHERE payment.status = 'confirmed' GROUP BY month ORDER BY month LIMIT 12");
+        $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' GROUP BY month ORDER BY month LIMIT 12");
 
         return view('dashboard.superadmin', $data);
     }
