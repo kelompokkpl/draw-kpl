@@ -130,7 +130,6 @@
         vertical-align: top; text-align: right; padding-bottom: 20px;">
                                 Invoice #: {{$code}}<br>
                                 Created: {{$date}}<br>
-                                Due: {{$due}}
                             </td>
                         </tr>
                     </table>

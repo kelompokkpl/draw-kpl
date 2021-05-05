@@ -104,7 +104,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                Invoice #{{$event->code_invoice}} from Draw System
+                                Invoice #{{$event->code_invoice}} from Draw System<br>
                             </td>
                             
                             <td>
@@ -142,13 +142,13 @@
             
             <tr class="item">
                 <td>Draw (1 event)</td>
-                <td>Rp100.000</td>
+                <td>Rp100000</td>
             </tr>
             
             <tr class="total">
                 <td></td>
                 <td>
-                   Total: Rp100.000
+                   Total: Rp100000
                 </td>
             </tr>
         </table>
@@ -163,22 +163,35 @@
                 <td style="text-align: right">Total</td>
             </tr>
             
-            @foreach($payment as $row)
-            <tr class="item">
-                <td>{{date('F d, Y', strtotime($row->transfer_date))}}</td>
-                <td style="text-align: left">{{$row->name}}</td>
-                <td>{{$row->status}}</td>
-                <td style="text-align: right">Rp{{$row->nominal}}</td>
-            </tr>
-            @endforeach
-            <tr class="total">
-                <td></td>
-                <td></td>
-                <td style="text-align: right"><b>Total</b></td>
-                <td style="text-align: right">
-                   <b>Rp{{$row->nominal}}</b>
-                </td>
-            </tr>
+            @if(empty($payment[0]))
+                <tr class="item">
+                    <td colspan="4" style="text-align: center">No transaction available</td>
+                </tr>
+            @else
+                @foreach($payment as $row)
+                <tr class="item">
+                    <td>{{date('F d, Y', strtotime($row->transfer_date))}}</td>
+                    <td style="text-align: left">{{$row->name}}</td>
+                    <td>{{$row->status}}</td>
+                    <td style="text-align: right">
+                        @if($row->status == 'Confirmed')
+                            Rp{{$row->nominal}}
+                        @else
+                            -
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+
+                <tr class="total">
+                    <td></td>
+                    <td></td>
+                    <td style="text-align: right"><b>Total</b></td>
+                    <td style="text-align: right">
+                       <b>Rp{{$row->nominal}}</b>
+                    </td>
+                </tr>
+            @endif
         </table>
     </div>
 </body>

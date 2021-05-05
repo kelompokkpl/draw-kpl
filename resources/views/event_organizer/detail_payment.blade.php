@@ -50,7 +50,7 @@
 
       <div class="row col-md-12">
         <br>
-        @if($event->payment_status=='Paid')
+        @if($event->payment_status=='Paid' || empty($payment[0]))
           <a href="{{route('printInvoice', $event->code_invoice)}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-print"></i> Print Invoice</a>
         @else
           <a class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Invoice</a>
