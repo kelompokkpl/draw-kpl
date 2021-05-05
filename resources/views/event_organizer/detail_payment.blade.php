@@ -91,7 +91,7 @@
                       <span class='text-danger' title='This field is required'>*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input type='number' title="Nominal" required class='form-control' placeholder='You can only enter the number only' name="nominal"/>
+                        <input type='number' title="Nominal" required class='form-control' placeholder='You can only enter the number only' name="nominal" value="100000" />
                         <div class="text-danger"></div>
                         <p class='help-block'></p>
                     </div>

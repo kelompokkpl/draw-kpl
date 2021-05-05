@@ -49,7 +49,8 @@ class PaymentController extends Controller
         $request->validate([
                     'name' => 'required|max:100',
                     'nominal' => 'required',
-                    'transfer_date' => 'required'
+                    'transfer_date' => 'required',
+                    'photo' => 'required|mimes:jpg,jpeg,png,bmp'
                     ]);
 
         $path = 'assets/uploads/payment';
