@@ -78,6 +78,7 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
+                  @if(!empty($drilldown))
                   <div class="chart">
                     <!-- Activity Chart Canvas -->
                     <figure class="highcharts-figure">
@@ -88,6 +89,9 @@
                     </figure>
                   </div>
                   <!-- /.chart-responsive -->
+                  @else
+                  <div style="text-align: center">No activities available</div>
+                  @endif
                 </div>
                 <!-- /.col -->
               </div>
@@ -109,6 +113,7 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
+                  @if(!empty($payment))
                   <div class="chart">
                     <!-- Payment Chart Canvas -->
                     <figure class="highcharts-figure">
@@ -119,6 +124,7 @@
                     </figure>
                   </div>
                   <!-- /.chart-responsive -->
+                  @endif
                 </div>
                 <!-- /.col -->
               </div>
