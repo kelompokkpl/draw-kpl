@@ -113,7 +113,7 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
-                  @if($payment['paid']!=0 && $payment['unpaid']!=0)
+                  @if(!($payment['paid']==0 && $payment['unpaid']==0))
                   <div class="chart">
                     <!-- Payment Chart Canvas -->
                     <figure class="highcharts-figure">
