@@ -114,6 +114,7 @@
               <div class="row">
                 <div class="col-md-12">
                   @if(!empty($payment))
+                  {{dd($payment)}}
                   <div class="chart">
                     <!-- Payment Chart Canvas -->
                     <figure class="highcharts-figure">
@@ -125,7 +126,7 @@
                   </div>
                   <!-- /.chart-responsive -->
                   @else
-                  <div style="text-align: center; margin: 30px 0 30px 0">No activities available</div>
+                  <div style="text-align: center; margin: 30px 0 30px 0">No payment available</div>
                   @endif
                 </div>
                 <!-- /.col -->
