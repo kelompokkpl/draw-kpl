@@ -26,7 +26,7 @@ class AdminController extends CBController
                 ->count();
         $unpaid = DB::table('event')
                 ->where('date_end', '>=', date('Y-m-d'))
-                ->where('payment_status', 'Unpaid')
+                ->where('payment_status', '<>', 'Paid')
                 ->whereNull('deleted_at')
                 ->count();
         $data['pay_chart'] = ['paid' => $paid, 'unpaid' =>  $unpaid];

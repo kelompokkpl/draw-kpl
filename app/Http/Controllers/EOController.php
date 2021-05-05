@@ -40,7 +40,7 @@ class EOController extends Controller
                 ->count();
         $unpaid = DB::table('event')
                 ->where('date_end', '>=', date('Y-m-d'))
-                ->where('payment_status', 'Unpaid')
+                ->where('payment_status', '<>', 'Paid')
                 ->where('cms_users_id', Session::get('admin_id'))
                 ->whereNull('deleted_at')
                 ->count();
