@@ -105,7 +105,7 @@
               </td>
               <td class="text-right">
                   <a class='btn btn-xs btn-info' title="Go to event's dashboard" onclick='' href="{{URL::to('eo/dashboard_event/'.$row->id)}}" target='_blank'>
-                    <i class='fa fa-dashboard'></i> 
+                    <i class='fa fa-dashboard'></i> Dashboard
                   </a>
                 <a class='btn btn-xs btn-primary btn-detail' title='Detail Data' href='{{ route('event.show', $row->id) }}'>
                   <i class='fa fa-eye'></i>
