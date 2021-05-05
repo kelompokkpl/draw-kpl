@@ -90,7 +90,7 @@
                   </div>
                   <!-- /.chart-responsive -->
                   @else
-                  <div style="text-align: center">No activities available</div>
+                  <div style="text-align: center; margin: 30px 0 30px 0">No activities available</div>
                   @endif
                 </div>
                 <!-- /.col -->
@@ -124,6 +124,8 @@
                     </figure>
                   </div>
                   <!-- /.chart-responsive -->
+                  @else
+                  <div style="text-align: center; margin: 30px 0 30px 0">No activities available</div>
                   @endif
                 </div>
                 <!-- /.col -->
