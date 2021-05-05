@@ -25,20 +25,24 @@ class EOController extends Controller
         $data['past'] = DB::table('event')
                     ->where('cms_users_id', Session::get('admin_id'))
                     ->where('date_end', '<', date('Y-m-d'))
+                    ->whereNull('deleted_at')
                     ->count();
         $data['event'] = DB::table('event')
                             ->where('cms_users_id', Session::get('admin_id'))
+                            ->whereNull('deleted_at')
                             ->count();
         $data['upcoming'] = $data['event'] - $data['past'];
         $paid = DB::table('event')
                 ->where('date_end', '>=', date('Y-m-d'))
                 ->where('cms_users_id', Session::get('admin_id'))
                 ->where('payment_status', 'Paid')
+                ->whereNull('deleted_at')
                 ->count();
         $unpaid = DB::table('event')
                 ->where('date_end', '>=', date('Y-m-d'))
                 ->where('payment_status', 'Unpaid')
                 ->where('cms_users_id', Session::get('admin_id'))
+                ->whereNull('deleted_at')
                 ->count();
         $data['payment'] = ['paid' => $paid,
                             'unpaid' => $unpaid
