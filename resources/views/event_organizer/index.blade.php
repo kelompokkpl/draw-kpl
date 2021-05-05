@@ -114,6 +114,7 @@
               <div class="row">
                 <div class="col-md-12">
                   @if($payment['paid']==0 && $payment['unpaid']==0)
+                  {{dd($payment, $payment['paid'])}}
                   <div class="chart">
                     <!-- Payment Chart Canvas -->
                     <figure class="highcharts-figure">
