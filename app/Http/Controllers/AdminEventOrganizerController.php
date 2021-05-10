@@ -271,7 +271,7 @@
 	    | 
 	    */
 	    public function hook_after_add($id) {        
-	    	$receiver = DB::table('cms_users')->whereIn('id_cms_privileges', 1)->pluck('id');
+	    	$receiver = DB::table('cms_users')->where('id_cms_privileges', 1)->pluck('id');
 	        $config['content'] = "New event organizer has been registered";
 			$config['to'] = CRUDBooster::adminPath('users');
 			$config['id_cms_users'] = $receiver; //This is an array of id users
