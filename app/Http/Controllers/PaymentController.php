@@ -72,7 +72,8 @@ class PaymentController extends Controller
 
             // Handle notification
             $receiver = DB::table('cms_users')->whereIn('id_cms_privileges', [1, 3])->pluck('id');
-            $config['content'] = "[New Payment] '".ucfirst(Session::get('event_name'))."' has ben added!";
+            $config['content'] = "[New Payment] has ben added!";
+            // $config['content'] = "[New Payment] '".ucfirst(Session::get('event_name'))."' has ben added!";
             $config['to'] = CRUDBooster::adminPath('payment');
             $config['id_cms_users'] = $receiver; 
             CRUDBooster::sendNotification($config);
