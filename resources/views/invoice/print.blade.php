@@ -93,11 +93,29 @@
     .rtl table tr td:nth-child(2) {
         text-align: left;
     }
+
+    .label {
+      color: white;
+      padding: 8px;
+      float: right !important;
+    }
+
+    .success {background-color: #04AA6D;} /* Green */
+    .info {background-color: #2196F3;} /* Blue */
+    .warning {background-color: #ff9800;} /* Orange */
+    .danger {background-color: #f44336;} /* Red */
+
     </style>
 </head>
 
 <body>
     <div class="invoice-box">
+        @if($event->payment_status=='paid')
+            <span class="label success" style="margin-right: 10px">PAID</span>
+        @else
+            <span class="label danger" style="margin-right: 10px">UNPAID</span>
+        @endif
+        <br><br>
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">

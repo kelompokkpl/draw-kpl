@@ -119,7 +119,8 @@
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;">
-        <span class="label danger" style="margin-right: 5px">UNPAID</span><br>
+        <span class="label danger" style="margin-right: 10px">UNPAID</span>
+        <br><br>
         <table cellpadding="0" cellspacing="0" style="width: 100%;
         line-height: inherit;
         text-align: left;">
