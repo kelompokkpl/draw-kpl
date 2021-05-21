@@ -18,7 +18,11 @@ use Maatwebsite\Excel\Facades\Excel;
 class EOController extends Controller
 {
     public function getLogin(){
-    	return view('event_organizer.login');
+        if(!empty(Session::get('admin_id'))){
+            return view('event_organizer.login');
+        } else{
+            return redirect()->route('indexEO');
+        }
     }
 
     public function getIndex(){

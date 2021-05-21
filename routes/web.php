@@ -38,7 +38,7 @@ Route::prefix('admin')->group(function () {
 // Event Organizer
 Route::get('', 'EOController@getLogin')->name('getLoginEO');
 Route::group(['middleware' => ['eo-auth', 'eo-log'], 'prefix' => 'eo'], function () {
-	Route::get('/', 'EOController@getIndex');
+	Route::get('/', 'EOController@getIndex')->name('indexEO');
 	Route::get('profile', 'EOController@getProfile')->name('getEOProfile');
 	Route::post('profile', 'EOController@updateProfile')->name('updateProfile');
 	Route::get('event_delete/{id}', 'EOEventController@destroy');
