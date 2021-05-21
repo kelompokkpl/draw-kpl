@@ -185,6 +185,12 @@
                 <tr class="item">
                     <td colspan="4">No transaction available</td>
                 </tr>
+                <tr class="item">
+                    <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" colspan="4">
+                        Transfer to:
+                        <br>Draw Eventy - 88222222 (BCA)
+                    </td>
+                </tr>
             @else
                 @foreach($payment as $row)
                 <tr class="item">
@@ -209,16 +215,6 @@
                        <b>Rp{{$row->nominal}}</b>
                     </td>
                 </tr>
-
-                @if($event->payment_status != 'Paid')
-                    <tr class="item">
-                        <td style="padding: 5px;
-                vertical-align: top; border-bottom: 1px solid #eee;" colspan="4">
-                            Transfer to:
-                            <br>Draw Eventy - 88222222 (BCA)
-                        </td>
-                    </tr>
-                @endif
             @endif
         </table>
     </div>
