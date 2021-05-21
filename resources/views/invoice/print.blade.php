@@ -110,7 +110,7 @@
 
 <body>
     <div class="invoice-box">
-        @if($event->payment_status=='paid')
+        @if($event->payment_status=='Paid')
             <span class="label success" style="margin-right: 10px">PAID</span>
         @else
             <span class="label danger" style="margin-right: 10px">UNPAID</span>
