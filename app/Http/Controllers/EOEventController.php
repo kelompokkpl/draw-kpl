@@ -109,8 +109,10 @@ class EOEventController extends Controller
             $data['due'] = date('F d, Y', strtotime("+1 week"));
             $data['event_name'] = $request->input('name');
 
+            $mail = str_replace("\xE2\x80\x8B", "", $user->email);
+
             Mail::send('mail.invoice', $data, function($message) {
-                $message->to(str_replace("\xE2\x80\x8B", "", $user->email), Session::get('admin_name'))
+                $message->to($mail, Session::get('admin_name'))
                         ->subject('Invoice from Draw System');
                 $message->from('draw.eventy@gmail.com', 'Draw System');
 
