@@ -114,7 +114,7 @@ class EOEventController extends Controller
             //             ->subject('Invoice from Draw System');
             //     $message->from('draw.eventy@gmail.com', 'Draw System');
 
-            });
+            // });
             dd($data['email'], $user->email);
             // if (Mail::failures()) {
             //     CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
