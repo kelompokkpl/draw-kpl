@@ -187,6 +187,7 @@
                 </tr>
                 <tr class="item">
                     <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" colspan="4">
+                        <br><br>
                         Transfer to:
                         <br>Draw Eventy - 88222222 (BCA)
                     </td>
