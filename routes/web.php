@@ -44,6 +44,11 @@ Route::group(['middleware' => ['eo-auth', 'eo-log'], 'prefix' => 'eo'], function
 	Route::get('event_delete/{id}', 'EOEventController@destroy');
 	Route::get('lockscreen', 'EOController@getLockscreen')->name('getEOLockScreen');
 
+	// Report Module
+	Route::get('detail_event/{event}', 'EOReportController@getDetail');
+	Route::get('report', 'EOReportController@getIndex')->name('getEOReport');
+	Route::post('report', 'EOReportController@printReport')->name('print_report');
+
 	Route::get('dashboard_event/category_delete/{id}', 'EOCategoryController@destroy');
 	Route::get('dashboard_event/participant_delete/{id}', 'EOParticipantController@destroy');
 	Route::get('dashboard_event/preferences', 'EOEventController@getPreferences');

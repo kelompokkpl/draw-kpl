@@ -47,7 +47,7 @@ class EOCategoryDisabledController extends Controller
     public function getCategory($id){
         $category = DB::table('category')
                         ->where('event_id', $id)
-                        ->select('id', 'name')
+                        ->select('id', 'name', 'is_draw', 'total_winner')
                         ->get();
         return json_encode($category);
     }

@@ -29,7 +29,7 @@
                         <span>{{cbLang("text_dashboard")}}</span> </a>
                     </li>
                 @else
-                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), 'event') && !Str::contains(URL::current(), 'payment')) ? 'active' : '' }}"><a href='{{URL::to('eo')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
+                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), 'event') && !Str::contains(URL::current(), 'payment') && !Str::contains(URL::current(), 'report')) ? 'active' : '' }}"><a href='{{URL::to('eo')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
                         <span>{{cbLang("text_dashboard")}}</span> </a>
                     </li>
                 @endif
@@ -45,6 +45,12 @@
                         <a href='{{URL::to('eo/payment')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'>
                             <i class='fa fa-money'></i>
                             <span>Payment</span> 
+                        </a>
+                    </li>
+                    <li class="{{ (Str::contains(URL::current(), 'report')) ? 'active' : '' }}">
+                        <a href='{{URL::to('eo/report')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'>
+                            <i class='fa fa-file-pdf-o'></i>
+                            <span>Event Report</span> 
                         </a>
                     </li>
                     <li class="{{ (Str::contains(URL::current(), 'demo')) ? 'active' : '' }}">
