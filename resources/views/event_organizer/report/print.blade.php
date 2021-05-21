@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <table class='table table-bordered' style="table-layout:fixed;">
+    <table class='' style="table-layout:fixed;">
         <thead>
             <tr>
                 <th colspan="2" class="text-center">EVENT DETAILS</th>
