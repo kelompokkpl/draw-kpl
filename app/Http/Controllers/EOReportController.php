@@ -63,9 +63,9 @@ class EOReportController extends Controller
                             ->orderBy('category_name')
                             ->get();
 
-        // return view('event_organizer.report.print', $data); 
-        $pdf = PDF::loadView('event_organizer.report.print', $data);  
-        return $pdf->stream($data['event']->name.'.pdf', array('Attachment'=>false));
+        return view('event_organizer.report.print', $data); 
+        // $pdf = PDF::loadView('event_organizer.report.print', $data);  
+        // return $pdf->stream($data['event']->name.'.pdf', array('Attachment'=>false));
     }
 
 }
