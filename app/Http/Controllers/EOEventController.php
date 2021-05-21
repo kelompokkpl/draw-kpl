@@ -110,7 +110,7 @@ class EOEventController extends Controller
             $data['event_name'] = $request->input('name');
 
             Mail::send('mail.invoice', $data, function($message) {
-                $message->to($user->email, Session::get('admin_name'))
+                $message->to('mutiarahardiani@gmail.com', Session::get('admin_name'))
                         ->subject('Invoice from Draw System');
                 $message->from('draw.eventy@gmail.com', 'Draw System');
 
