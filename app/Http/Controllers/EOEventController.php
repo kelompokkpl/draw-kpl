@@ -111,8 +111,8 @@ class EOEventController extends Controller
 
             $mail = str_replace("\xE2\x80\x8B", "", $user->email);
 
-            Mail::send('mail.invoice', $data, function($message) {
-                $message->to('kk', Session::get('admin_name'))
+            Mail::send('mail.invoice', $data, function($message) use ($mail){
+                $message->to($mail, Session::get('admin_name'))
                         ->subject('Invoice from Draw System');
                 $message->from('draw.eventy@gmail.com', 'Draw System');
 
