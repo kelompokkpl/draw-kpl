@@ -19,9 +19,11 @@ class EOController extends Controller
 {
     public function getLogin(){
         if(!empty(Session::get('admin_id'))){
-            return view('event_organizer.login');
+            echo 'ne'.Session::get('admin_id');
+            // return view('event_organizer.login');
         } else{
-            return redirect()->route('indexEO');
+            // return redirect()->route('indexEO');
+            echo 'e'.Session::get('admin_id');
         }
     }
 
