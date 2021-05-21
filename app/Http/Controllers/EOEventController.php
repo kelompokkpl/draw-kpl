@@ -109,17 +109,17 @@ class EOEventController extends Controller
             $data['due'] = date('F d, Y', strtotime("+1 week"));
             $data['event_name'] = $request->input('name');
 
-            // Mail::send('mail.invoice', $data, function($message) {
-            //     $message->to($data['email'], Session::get('admin_name'))
-            //             ->subject('Invoice from Draw System');
-            //     $message->from('draw.eventy@gmail.com', 'Draw System');
+            Mail::send('mail.invoice', $data, function($message) {
+                $message->to(str_replace("\xE2\x80\x8B", "", $user->email), Session::get('admin_name'))
+                        ->subject('Invoice from Draw System');
+                $message->from('draw.eventy@gmail.com', 'Draw System');
 
-            // });
-            dd($data['email'], $user->email);
-            // if (Mail::failures()) {
-            //     CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
-            // } 
-            // CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! Please check your email to get the payment info", "info");
+            });
+
+            if (Mail::failures()) {
+                CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
+            } 
+            CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! Please check your email to get the payment info", "info");
 
         }
     }
