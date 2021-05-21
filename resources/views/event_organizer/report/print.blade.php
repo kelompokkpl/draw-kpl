@@ -64,6 +64,11 @@
 
     <br>
     <table class='table'>
+        <thead>
+            <tr>
+                <th colspan="3" class="text-center">WINNERS DETAILS</th>
+            </tr>
+        </thead>
             @foreach($winners as $row)
                 @if($loop->index==0 || $winners[$loop->index-1]->category_name != $row->category_name)
                     <tr>
