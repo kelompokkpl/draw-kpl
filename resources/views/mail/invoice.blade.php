@@ -85,7 +85,7 @@
     .label {
       color: white;
       padding: 8px;
-      text-align: right !important;
+      float: right !important;
     }
 
     .success {background-color: #04AA6D;} /* Green */
