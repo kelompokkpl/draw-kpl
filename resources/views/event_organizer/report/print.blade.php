@@ -67,9 +67,7 @@
             @foreach($winners as $row)
                 @if($loop->index==0 || $winners[$loop->index-1]->category_name != $row->category_name)
                     <thead style="margin-top: 5px">
-                        <tr>
-                            <th colspan="3">{{$row->category_name}}</th>
-                        </tr>
+                        <th colspan="3">{{$row->category_name}}</th>
                     </thead>
                     @php
                         $i = 1;
