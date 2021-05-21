@@ -82,6 +82,16 @@
             text-align: center;
         }
     }
+    .label {
+      color: white;
+      padding: 8px;
+      text-align: right !important;
+    }
+
+    .success {background-color: #04AA6D;} /* Green */
+    .info {background-color: #2196F3;} /* Blue */
+    .warning {background-color: #ff9800;} /* Orange */
+    .danger {background-color: #f44336;} /* Red */
     
     /** RTL **/
     .rtl {
@@ -109,6 +119,7 @@
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;">
+        <span class="label danger">UNPAID</span>
         <table cellpadding="0" cellspacing="0" style="width: 100%;
         line-height: inherit;
         text-align: left;">
@@ -196,6 +207,15 @@
                    Total: Rp100.000
                 </td>
             </tr>
+
+            <tr class="item">
+                <td style="padding: 5px;
+        vertical-align: top; border-bottom: 1px solid #eee;" colspan="2">
+                    Transfer to:
+                    <br>Draw Eventy - 88222222 (BCA)
+                </td>
+            </tr>
+
         </table>
     </div>
 </body>
