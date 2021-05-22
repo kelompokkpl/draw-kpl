@@ -5,7 +5,7 @@
         <section class="content-header">
             <h1> <i class='fa fa-envelope'></i> Mail to Winner &nbsp;&nbsp;
 
-              <a href="{{URL::to('eo/mails')}}" id='btn_show_data' class="btn btn-sm btn-primary" title="Show Data Event">
+              <a href="{{URL::to('eo/dashboard_event/mails')}}" id='btn_show_data' class="btn btn-sm btn-primary" title="Show Data Event">
                   <i class="fa fa-table"></i> Show Data
               </a>
 
