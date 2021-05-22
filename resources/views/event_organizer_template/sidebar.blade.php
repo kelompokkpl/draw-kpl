@@ -25,11 +25,11 @@
                 <!-- Optionally, you can add icons to the links -->
                 
                 @if(Str::contains(URL::current(), 'dashboard_event'))
-                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), 'event')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/'.Session::get('event_id'))}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
+                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), '/event')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/'.Session::get('event_id'))}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
                         <span>{{cbLang("text_dashboard")}}</span> </a>
                     </li>
                 @else
-                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), 'event') && !Str::contains(URL::current(), 'payment') && !Str::contains(URL::current(), 'report')) ? 'active' : '' }}"><a href='{{URL::to('eo')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
+                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), '/event') && !Str::contains(URL::current(), 'payment') && !Str::contains(URL::current(), 'report')) ? 'active' : '' }}"><a href='{{URL::to('eo')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
                         <span>{{cbLang("text_dashboard")}}</span> </a>
                     </li>
                 @endif
