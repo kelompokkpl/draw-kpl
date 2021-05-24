@@ -25,7 +25,7 @@
                 <!-- Optionally, you can add icons to the links -->
                 
                 @if(Str::contains(URL::current(), 'dashboard_event'))
-                    <li data-id='{{$dashboard->id}}' class="{{ (!Str::contains(URL::current(), '/draw') && (!Str::contains(URL::current(), '/category') && (!Str::contains(URL::current(), '/participant') && (!Str::contains(URL::current(), '/mail') && (!Str::contains(URL::current(), 'preferences')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/'.Session::get('event_id'))}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
+                    <li data-id='{{$dashboard->id}}' class="{{ ((!Str::contains(URL::current(), '/draw') && (!Str::contains(URL::current(), '/category') && (!Str::contains(URL::current(), '/participant') && (!Str::contains(URL::current(), '/mail') && (!Str::contains(URL::current(), 'preferences')) ? 'active' : '' }}"><a href='{{URL::to('eo/dashboard_event/'.Session::get('event_id'))}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
                         <span>{{cbLang("text_dashboard")}}</span> </a>
                     </li>
                 @else
