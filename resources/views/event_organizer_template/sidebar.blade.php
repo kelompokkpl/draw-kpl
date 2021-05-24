@@ -76,7 +76,7 @@
                             <span>Let's Draw!</span> 
                         </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'category')) ? 'active' : '' }}">
+                    <li class="{{ (Str::contains(URL::current(), 'category') && !(Str::contains(URL::current(), '_disabled'))) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/category')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>
                         <span>Category</span> </a>
                     </li>
