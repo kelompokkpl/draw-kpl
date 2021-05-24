@@ -47,6 +47,7 @@
 			$this->form[] = ['label'=>'Date End','name'=>'date_end','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Payment Status','name'=>'payment_status','type'=>'hidden'];
 			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'hidden','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Code Invoice','name'=>'code_invoice','type'=>'hidden','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
