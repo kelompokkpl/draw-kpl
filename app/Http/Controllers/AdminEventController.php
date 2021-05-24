@@ -315,10 +315,18 @@
 	    | @arr
 	    |
 	    */
-	    public function hook_before_add(&$postdata) {        
+	    public function hook_before_add(&$postdata) { 
+	        $code = date('Ym');
+	        $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
+	        if($event == null){
+	            $code .= '0001';
+	        } else{
+	            $code .= str_pad(intval(substr($event->code_invoice, 7))+1, 4, '0', STR_PAD_LEFT);
+	        }
+
 	        $postdata['status'] = 'Non Active';
 	        $postdata['payment_status'] = 'Unpaid';
-
+	        $postdata['code_invoice'] = $code;
 	    }
 
 	    /* 
