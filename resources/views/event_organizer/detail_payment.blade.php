@@ -50,11 +50,7 @@
 
       <div class="row col-md-12">
         <br>
-        @if($event->payment_status=='Paid' || empty($payment[0]))
-          <a href="{{route('printInvoice', $event->code_invoice)}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-print"></i> Print Invoice</a>
-        @else
-          <a class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Invoice</a>
-        @endif
+        <a href="{{route('printInvoice', $event->code_invoice)}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-print"></i> Print Invoice</a>
         &nbsp;
         @if($event->payment_status=='Unpaid' || $event->payment_status=='Rejected')
           <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#paymentCreate"><i class="fa fa-upload"></i> Upload</a>
