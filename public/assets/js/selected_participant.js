@@ -52,7 +52,7 @@ new Vue({
 });
 
 $("#form").submit(function(){
-	var isset_category = $("#form select[name=category_id]").val().length > 0;
+	var isset_category = this.categories.length > 0;
     var checked = $("#form input[type=checkbox]:checked").length > 0;
     if (!isset_category){
         swal({   
