@@ -52,12 +52,12 @@ new Vue({
 });
 
 $("#form").submit(function(){
-	var isset_category = $("#form input[name=category_id]").length > 0;
+	var isset_category = $("#form input[name=category_id]").val().length > 0;
     var checked = $("#form input[type=checkbox]:checked").length > 0;
     if (!isset_category){
         swal({   
             title: "Warning",   
-            text: $("#form input[name=category_id]").length,   
+            text: "Hmm.. no category selected!",   
             type: "warning",    
             confirmButtonColor: "#ff0000",   
             confirmButtonText: "OK",  
