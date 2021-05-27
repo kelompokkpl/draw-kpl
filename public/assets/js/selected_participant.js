@@ -57,7 +57,7 @@ $("#form").submit(function(){
     if (!isset_category){
         swal({   
             title: "Warning",   
-            text: "Hmm.. no category selected!",   
+            text: $("#form input[name=category_id]").length,   
             type: "warning",    
             confirmButtonColor: "#ff0000",   
             confirmButtonText: "OK",  
