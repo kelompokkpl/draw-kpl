@@ -52,8 +52,9 @@ new Vue({
 });
 
 $("#form").submit(function(){
+	var isset_category = $("#form input[name=category_id]").length > 0;
     var checked = $("#form input[type=checkbox]:checked").length > 0;
-    if (!checked){
+    if (!checked || !isset_category){
         swal({   
             title: "Warning",   
             text: "Please check list at least one data!",   
