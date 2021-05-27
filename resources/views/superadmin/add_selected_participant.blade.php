@@ -48,9 +48,6 @@
 
           @include('superadmin.participant_data')
 
-
-          <!-- ADD A PAGINATION -->
-          <p>{!! urldecode(str_replace("/?","?",$participant->appends(Request::all())->render())) !!}</p>
       </form>
     </div>
 </div>

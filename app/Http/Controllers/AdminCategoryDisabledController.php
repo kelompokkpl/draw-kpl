@@ -343,7 +343,10 @@
 	    							->select('participant.*', 'event.id as event_id', 'event.name as event_name')
 	    							->orderby('id','desc')
 	    							->paginate(10);
-	    	$data['event'] = DB::table('event')->orderby('name','asc')->get();
+	    	$data['event'] = DB::table('event')
+	    		->whereNull('deleted_at')
+	    		->orderby('name','asc')
+	    		->get();
 	    	$data['category'] = DB::table('category')->orderby('name','asc')->get();
 
 	    	return view('superadmin.add_selected_participant', $data);
