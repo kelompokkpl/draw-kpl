@@ -54,15 +54,27 @@ new Vue({
 $("#form").submit(function(){
 	var isset_category = $("#form input[name=category_id]").length > 0;
     var checked = $("#form input[type=checkbox]:checked").length > 0;
-    if (!checked || !isset_category){
+    if (!isset_category){
         swal({   
             title: "Warning",   
-            text: "Please check list at least one data!",   
+            text: "Hmm.. no category selected!",   
             type: "warning",    
             confirmButtonColor: "#ff0000",   
             confirmButtonText: "OK",  
             closeOnConfirm: false 
         });
         return false;
+    } else{
+    	if (!checked){
+	        swal({   
+	            title: "Warning",   
+	            text: "Please check list at least one data!",   
+	            type: "warning",    
+	            confirmButtonColor: "#ff0000",   
+	            confirmButtonText: "OK",  
+	            closeOnConfirm: false 
+	        });
+	        return false;
+	    }
     }
 });
