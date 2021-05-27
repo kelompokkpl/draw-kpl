@@ -80,11 +80,11 @@
                         <a href='{{URL::to('eo/dashboard_event/category')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>
                         <span>Category</span> </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'participant')) ? 'active' : '' }}">
+                    <li class="{{ (Str::contains(URL::current(), '/participant')) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/participant')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-users'></i>
                         <span>Participant</span> </a>
                     </li>
-                    <li class="{{ (Str::contains(URL::current(), 'category_disabled')) ? 'active' : '' }}">
+                    <li class="{{ (Str::contains(URL::current(), 'category_disabled') || Str::contains(URL::current(), 'selected_participant')) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/category_disabled')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-ban'></i>
                         <span>Category Disabled</span> </a>
                     </li>
