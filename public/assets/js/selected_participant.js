@@ -32,6 +32,7 @@ new Vue({
 			axios.get(basepath+"/category_by_event/"+this.event_selected)
 				.then(response => (this.categories = response.data));
 				// this.category_selected = this.categories[0].id;
+				this.participants = '';
 		},
 
 		categoryOnChange() {
@@ -52,29 +53,16 @@ new Vue({
 });
 
 $("#form").submit(function(){
-	var isset_category = this.categories.length > 0;
     var checked = $("#form input[type=checkbox]:checked").length > 0;
-    if (!isset_category){
+    if (!checked){
         swal({   
             title: "Warning",   
-            text: "Hmm.. no category selected!",   
+            text: "Please check list at least one data!",   
             type: "warning",    
             confirmButtonColor: "#ff0000",   
             confirmButtonText: "OK",  
             closeOnConfirm: false 
         });
         return false;
-    } else{
-    	if (!checked){
-	        swal({   
-	            title: "Warning",   
-	            text: "Please check list at least one data!",   
-	            type: "warning",    
-	            confirmButtonColor: "#ff0000",   
-	            confirmButtonText: "OK",  
-	            closeOnConfirm: false 
-	        });
-	        return false;
-	    }
     }
 });
