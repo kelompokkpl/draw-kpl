@@ -79,7 +79,12 @@ class EOParticipantController extends Controller
     }
 
     public function import(Request $request){
-        Excel::import(new ParticipantImport, request()->file('participant'));
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
+        $validatedData = $request->validate([
+            'participant' => 'required|max:5000|mimes:csv,xls,xlsx'
+        ]);
+        if($validatedData){
+            Excel::import(new ParticipantImport, request()->file('participant'));
+            CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
+        }
     }
 }
