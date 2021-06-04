@@ -80,7 +80,7 @@ class EOParticipantController extends Controller
 
     public function import(Request $request){
         $validatedData = $request->validate([
-            'participant' => 'required|max:5000|mimes:csv,xls,xlsx'
+            'participant' => 'required|max:5000|mimetypes:application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/csv'
         ]);
         if($validatedData){
             Excel::import(new ParticipantImport, request()->file('participant'));
