@@ -52,7 +52,7 @@
               <span class='text-danger' title='This field is required'>*</span>
             </label>
             <div class="col-sm-10">
-              <input type='text' title="Subject" required placeholder='Mail Subject'  maxlength=100 class='form-control' name="subject" />
+              <input type='text' title="Subject" required placeholder='Mail Subject' id="subject" maxlength=100 class='form-control' name="subject" />
               <div class="text-danger"></div>
               <p class='help-block'></p>
             </div>
@@ -87,17 +87,28 @@
   $('#btn-submit').on('click',function(e){
     e.preventDefault();
     var form = $(this).parents('form');
-    swal({
-        title: "Are you sure?",
-        text: "An email will be sent to all winners in this category. Make sure the content you share is correct",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#00D640",
-        confirmButtonText: "Yes, send now!",
-        closeOnConfirm: false
-    }, function(isConfirm){
-        if (isConfirm) form.submit();
-    });
-  });
+    let content = $('#editor').val();
+    let subject = $('#subject').val();
+
+    if(content == '' || subject == ''){
+        swal({
+          title: "Whoops!",
+          text: "You must fill subject and content!",
+          type: "warning",
+      });
+      return false;
+    } else{
+      swal({
+          title: "Are you sure?",
+          text: "An email will be sent to all winners in this category. Make sure the content you share is correct",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#00D640",
+          confirmButtonText: "Yes, send now!",
+          closeOnConfirm: false
+      }, function(isConfirm){
+          if (isConfirm) form.submit();
+      });
+    }
 </script>
 @endpush
