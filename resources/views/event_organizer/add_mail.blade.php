@@ -26,16 +26,6 @@
   }
 </style>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
 <div class='panel panel-default' id="root">
   <div class='panel-heading'><i class="fa fa-envelope"></i> Send an email to Winners</div>
     <div class="panel-body">
