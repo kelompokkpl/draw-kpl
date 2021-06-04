@@ -82,7 +82,7 @@ class EOParticipantController extends Controller
         $validatedData = Validator::make(
           [
               'file'      => $request->participant,
-              'extension' => strtolower($request->file->getClientOriginalExtension()),
+              'extension' => strtolower($request->participant->getClientOriginalExtension()),
           ],
           [
               'file'          => 'required|max:5000',
