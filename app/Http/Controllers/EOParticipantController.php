@@ -80,7 +80,7 @@ class EOParticipantController extends Controller
 
     public function import(Request $request){
         $validatedData = $request->validate([
-            'participant' => 'required|max:5000';
+            'participant' => 'required|max:5000'
         ]);
         if($validatedData){
             $extension = $request->participant->getClientOriginalExtension();
