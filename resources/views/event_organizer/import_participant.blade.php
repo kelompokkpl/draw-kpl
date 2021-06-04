@@ -12,10 +12,6 @@
               <a href="" id='btn_add_data' class="btn btn-sm btn-success" title="Add Data Participant" data-toggle="modal" data-target="#participantCreate">
                   <i class="fa fa-plus-circle"></i> Add Data
               </a>
-
-              <a href="{{URL::to('eo/dashboard_event/participant/import')}}" class="btn btn-sm btn-success" title="Import Excel">
-                  <i class="fa fa-download"></i> Import Excel
-              </a>
             </h1>
                 <ol class="breadcrumb">
                     <li><a href="{{URL::to('eo/dashboard_event/participant')}}"><i class="fa fa-users"></i> Participant</a></li>
