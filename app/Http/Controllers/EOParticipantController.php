@@ -79,19 +79,17 @@ class EOParticipantController extends Controller
     }
 
     public function import(Request $request){
-        $validatedData = Validator::make(
-          [
-              'file'      => $request->participant,
-              'extension' => strtolower($request->participant->getClientOriginalExtension()),
-          ],
-          [
-              'file'          => 'required|max:5000',
-              'extension'      => 'required|in:csv,xlsx,xls',
-          ]
-        );
+        $validatedData = $request->validate([
+            'participant' => 'required|max:5000';
+        ]);
         if($validatedData){
-            Excel::import(new ParticipantImport, request()->file('participant'));
-            CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
+            $extension = $request->participant->getClientOriginalExtension();
+            if($extension == 'csv' || $extension == 'xls' || $extension == 'xlsx'){
+                Excel::import(new ParticipantImport, request()->file('participant'));
+                CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
+            } else{
+                CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Hmm! File type must be in .csv, .xls, .xlsx", "danger");
+            }
         }
     }
 }
