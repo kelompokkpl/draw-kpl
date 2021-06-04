@@ -88,7 +88,7 @@ class EOParticipantController extends Controller
                 Excel::import(new ParticipantImport, request()->file('participant'));
                 CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
             } else{
-                CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Hmm! File type must be in .csv, .xls, .xlsx", "danger");
+                CRUDBooster::redirect(URL::to('eo/dashboard_event/participant/import'), "Hmm! File type must be in .csv, .xls, .xlsx", "danger");
             }
         }
     }
