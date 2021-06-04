@@ -55,7 +55,7 @@
                 <span class='text-danger' title='This field is required'>*</span>
             </label>
             <div class="col-sm-10">
-              <input type='file' title="Participant" required class='form-control' name="participant"/>
+              <input type='file' title="Participant" required class='form-control' name="participant" id="participant" accept=".csv, .xls, .xlsx"/>
               <div class="text-danger"></div>
               <p class='help-block text-left'>File type supported only : XLS, XLSX, CSV</p>
             </div>
@@ -79,18 +79,29 @@
 <script type="text/javascript">
   $('#btn-submit').on('click',function(e){
     e.preventDefault();
+    let participant = $('#participant').val();
     var form = $(this).parents('form');
-    swal({
-        title: "Are you sure?",
-        text: "Data will imported to database, make sure correctly the table tructure!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#00D640",
-        confirmButtonText: "Yes, import now!",
-        closeOnConfirm: false
-    }, function(isConfirm){
-        if (isConfirm) form.submit();
-    });
+
+    if(participant == '' || participant == null){
+        swal({
+          title: "Whoops!",
+          text: "You must select an data!",
+          type: "warning",
+      });
+      return false;
+    } else{
+        swal({
+          title: "Are you sure?",
+          text: "Data will imported to database, make sure correctly the table tructure!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#00D640",
+          confirmButtonText: "Yes, import now!",
+          closeOnConfirm: false
+      }, function(isConfirm){
+          if (isConfirm) form.submit();
+      });
+    }
   });
 </script>
 @endpush
