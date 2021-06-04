@@ -27,7 +27,20 @@ class ParticipantImport implements ToModel,  WithValidation
     public function rules(): array
     {
         return [
-            '2' => 'required|email',
+            '0' => 'required|max:30',
+            '1' => 'required|max:100',
+            '2' => 'required|email|max:100',
+            '3' => 'required|max:16',
+        ];
+    }
+
+    public function customValidationAttributes()
+    {
+        return [
+            '0' => 'participant ID',
+            '1' => 'participant name',
+            '2' => 'email',
+            '3' => 'phone number',
         ];
     }
 }
