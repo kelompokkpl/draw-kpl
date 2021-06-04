@@ -110,5 +110,6 @@
           if (isConfirm) form.submit();
       });
     }
+  });
 </script>
 @endpush
