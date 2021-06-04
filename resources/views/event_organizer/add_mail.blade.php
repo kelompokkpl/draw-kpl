@@ -52,7 +52,7 @@
               <span class='text-danger' title='This field is required'>*</span>
             </label>
             <div class="col-sm-10">
-              <input type='text' title="Subject" required placeholder='Mail Subject'  maxlength=100 class='form-control' name="subject" />
+              <input type='text' title="Subject" required placeholder='Mail Subject'  maxlength=100 class='form-control' name="subject" required/>
               <div class="text-danger"></div>
               <p class='help-block'></p>
             </div>
