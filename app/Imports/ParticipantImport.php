@@ -3,10 +3,11 @@
 namespace App\Imports;
 
 use App\Participant;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ParticipantImport implements ToModel
+class ParticipantImport implements ToModel,  WithValidation
 {
     /**
     * @param Collection $collection
@@ -21,5 +22,12 @@ class ParticipantImport implements ToModel
         	'phone' => $row[3],
         	'created_at' => date('Y-m-d H:i:s')
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            '2' => 'required|email',
+        ];
     }
 }
