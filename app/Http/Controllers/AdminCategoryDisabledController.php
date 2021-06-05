@@ -331,6 +331,19 @@
 
 
 	    //By the way, you can still create your own method in here... :) 
+	    public function getDetail($id) {		  
+		  $data = [];
+		  $data['page_title'] = 'Draw: Detail Category Disabled';
+		  $data['row'] = DB::table('category_disabled')
+		  	->leftJoin('event', 'event.id', 'category_disabled.event_id')
+		  	->leftJoin('category', 'category.id', 'category_disabled.category_id')
+		  	->leftJoin('participant', 'participant.id', 'category_disabled.participant_id')
+		  	->where('id',$id)
+		  	->select('event.name as event_name', 'category.name as category_name', 'participant.name as participant_name')
+		  	->first();
+		  
+		  return view('superadmin.detail_category_disabled', $data);
+		}
 
 	    public function addSelectedParticipant(){
 	  //   	if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE) {    
