@@ -105,10 +105,6 @@
                   <a class='btn btn-xs btn-success btn-edit' title='Edit Data' href="{{ route('category.edit', $row->id) }}">
                     <i class='fa fa-pencil'></i>
                   </a>
-                @else
-                  <a class='btn btn-xs btn-secondary btn-edit' title="Can't edit the data because the category has been drawn">
-                    <i class='fa fa-pencil'></i>
-                  </a>
                 @endif
                 <a class='btn btn-xs btn-danger btn-delete' title='Delete' href='javascript:;' 
                   onclick="swal({   
