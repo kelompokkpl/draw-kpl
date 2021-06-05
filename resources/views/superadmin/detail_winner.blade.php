@@ -19,13 +19,13 @@
           <label>Event Name</label>
         </div>
         <div class='col-md-10'>
-          : {{$row->event_name}}
+          : {{$event->name}}
         </div>
       </div>
 
       <div class="row">
          <div class='col-md-2'>
-          <label>Winner Name</label>
+          <label>Participant Name</label>
         </div>
         <div class='col-md-10'>
           : {{$row->participant_name}}

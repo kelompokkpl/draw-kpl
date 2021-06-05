@@ -19,7 +19,7 @@
           <label>Event Name</label>
         </div>
         <div class='col-md-10'>
-          : {{$row->event_name}}
+          : {{$event->name}}
         </div>
       </div>
 
@@ -28,7 +28,7 @@
           <label>Participant Name</label>
         </div>
         <div class='col-md-10'>
-          : {{$event->name}}
+          : {{$row->participant_name}}
         </div>
       </div>       
     </div>

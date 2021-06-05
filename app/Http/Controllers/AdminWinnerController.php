@@ -333,12 +333,16 @@
 		  $data = [];
 		  $data['page_title'] = 'Draw: Detail Winner';
 		  $data['row'] = DB::table('winner')
-		  	->leftJoin('event', 'event.id', 'winner.event_id')
 		  	->leftJoin('category', 'category.id', 'winner.category_id')
 		  	->leftJoin('participant', 'participant.id', 'winner.participant_id')
 		  	->where('winner.id',$id)
-		  	->select('event.name as event_name', 'category.name as category_name', 'participant.name as participant_name')
+		  	->select('category.name as category_name', 'participant.name as participant_name', 'category.event_id as event_id')
 		  	->first();
+
+		  	$data['event'] = DB::table('event')
+		  		->where('id', $data['row']->event_id)
+		  		->select('name')
+		  		->first();
 		  
 		  return view('superadmin.detail_winner', $data);
 		}
