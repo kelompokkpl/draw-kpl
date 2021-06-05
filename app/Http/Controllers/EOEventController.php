@@ -77,6 +77,11 @@ class EOEventController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'date_start' => 'required|after:yesterday', 
+            'date_start' => 'required|after_or_equal:date_start', 
+        ]);
+
         $code = date('Ym');
         $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
         if($event == null){
@@ -169,6 +174,11 @@ class EOEventController extends Controller
     public function update(Request $request, $id)
     {
         if(Str::contains(URL::previous(), 'edit')){
+            $request->validate([
+                'date_start' => 'required|after:yesterday', 
+                'date_start' => 'required|after_or_equal:date_start', 
+            ]);
+            
             unset($request['_token'], $request['_method']);
             DB::table('event')->where('id', $id)->update($request->all());
         } else {
