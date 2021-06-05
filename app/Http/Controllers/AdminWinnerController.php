@@ -329,6 +329,20 @@
 
 	    //By the way, you can still create your own method in here... :) 
 
+	    public function getDetail($id) {		  
+		  $data = [];
+		  $data['page_title'] = 'Draw: Detail Winner';
+		  $data['row'] = DB::table('winner')
+		  	->leftJoin('event', 'event.id', 'winner.event_id')
+		  	->leftJoin('category', 'category.id', 'winner.category_id')
+		  	->leftJoin('participant', 'participant.id', 'winner.participant_id')
+		  	->where('winner.id',$id)
+		  	->select('event.name as event_name', 'category.name as category_name', 'participant.name as participant_name')
+		  	->first();
+		  
+		  return view('superadmin.detail_winner', $data);
+		}
+
 	    public function getAdd() {
 			//Create an Auth
 			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
