@@ -335,12 +335,16 @@
 		  $data = [];
 		  $data['page_title'] = 'Draw: Detail Category Disabled';
 		  $data['row'] = DB::table('category_disabled')
-		  	->leftJoin('event', 'event.id', 'category_disabled.event_id')
 		  	->leftJoin('category', 'category.id', 'category_disabled.category_id')
 		  	->leftJoin('participant', 'participant.id', 'category_disabled.participant_id')
 		  	->where('category_disabled.id',$id)
-		  	->select('event.name as event_name', 'category.name as category_name', 'participant.name as participant_name')
+		  	->select('category.name as category_name', 'participant.name as participant_name', 'category.event_id as event_id')
 		  	->first();
+
+		  	$data['event'] = DB::table('event')
+		  		->where('id', $data['row']->event_id)
+		  		->select('name')
+		  		->first();
 		  
 		  return view('superadmin.detail_category_disabled', $data);
 		}

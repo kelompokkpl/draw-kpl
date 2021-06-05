@@ -28,7 +28,7 @@
           <label>Participant Name</label>
         </div>
         <div class='col-md-10'>
-          : {{$row->participant_name}}
+          : {{$event->name}}
         </div>
       </div>       
     </div>
