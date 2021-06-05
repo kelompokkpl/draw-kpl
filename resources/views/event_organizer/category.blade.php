@@ -106,7 +106,7 @@
                     <i class='fa fa-pencil'></i>
                   </a>
                 @else
-                  <a class='btn btn-xs btn-edit' title='Edit Data'>
+                  <a class='btn btn-xs btn-secondary btn-edit' title="Can't edit the data because the category has been drawn">
                     <i class='fa fa-pencil'></i>
                   </a>
                 @endif
