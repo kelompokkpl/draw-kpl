@@ -77,57 +77,59 @@ class EOEventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'date_start' => 'required|after:yesterday', 
-            'date_start' => 'required|after_or_equal:date_start', 
+            'date_end' => 'required|after_or_equal:date_start', 
         ]);
 
-        $code = date('Ym');
-        $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
-        if($event == null){
-            $code .= '0001';
-        } else{
-            $code .= str_pad(intval(substr($event->code_invoice, 7))+1, 4, '0', STR_PAD_LEFT);
-        }
-        
-        unset($request['_token']);
-        $request['created_at'] = date('Y-m-d H:i:s');
-        $request['code_invoice'] = $code;
-        $request['payment_status'] = 'Unpaid';
-        $request['status'] = 'Non Active';
-        $request['cms_users_id'] = Session::get("admin_id");
+        if($validatedData){
+            $code = date('Ym');
+            $event = DB::table('event')->select('code_invoice')->where('code_invoice', 'like', $code.'%')->orderBy('code_invoice', 'desc')->first();
+            if($event == null){
+                $code .= '0001';
+            } else{
+                $code .= str_pad(intval(substr($event->code_invoice, 7))+1, 4, '0', STR_PAD_LEFT);
+            }
+            
+            unset($request['_token']);
+            $request['created_at'] = date('Y-m-d H:i:s');
+            $request['code_invoice'] = $code;
+            $request['payment_status'] = 'Unpaid';
+            $request['status'] = 'Non Active';
+            $request['cms_users_id'] = Session::get("admin_id");
 
-        if(DB::table('event')->insert($request->all())){
-            // Handle notification
-            $receiver = DB::table('cms_users')->whereIn('id_cms_privileges', [1, 3])->pluck('id');
-            $config['content'] = "[New Event] '".ucfirst($request->name)."' has ben added!";
-            $config['to'] = CRUDBooster::adminPath('event');
-            $config['id_cms_users'] = $receiver; 
-            CRUDBooster::sendNotification($config);
+            if(DB::table('event')->insert($request->all())){
+                // Handle notification
+                $receiver = DB::table('cms_users')->whereIn('id_cms_privileges', [1, 3])->pluck('id');
+                $config['content'] = "[New Event] '".ucfirst($request->name)."' has ben added!";
+                $config['to'] = CRUDBooster::adminPath('event');
+                $config['id_cms_users'] = $receiver; 
+                CRUDBooster::sendNotification($config);
 
-            // Send invoice email 
-            $user = Db::table('cms_users')->where('id', Session::get('admin_id'))->select('email')->first();
-            $data['email'] = $user->email;
-            $data['name'] = Session::get('admin_name');
-            $data['code'] = $code;
-            $data['date'] = date('F d, Y');
-            $data['due'] = date('F d, Y', strtotime("+1 week"));
-            $data['event_name'] = $request->input('name');
+                // Send invoice email 
+                $user = Db::table('cms_users')->where('id', Session::get('admin_id'))->select('email')->first();
+                $data['email'] = $user->email;
+                $data['name'] = Session::get('admin_name');
+                $data['code'] = $code;
+                $data['date'] = date('F d, Y');
+                $data['due'] = date('F d, Y', strtotime("+1 week"));
+                $data['event_name'] = $request->input('name');
 
-            $mail = str_replace("\xE2\x80\x8B", "", $user->email);
+                $mail = str_replace("\xE2\x80\x8B", "", $user->email);
 
-            Mail::send('mail.invoice', $data, function($message) use ($mail){
-                $message->to($mail, Session::get('admin_name'))
-                        ->subject('Invoice from Draw System');
-                $message->from('draw.eventy@gmail.com', 'Draw System');
+                Mail::send('mail.invoice', $data, function($message) use ($mail){
+                    $message->to($mail, Session::get('admin_name'))
+                            ->subject('Invoice from Draw System');
+                    $message->from('draw.eventy@gmail.com', 'Draw System');
 
-            });
+                });
 
-            if (Mail::failures()) {
-                CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
-            } 
-            CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! Please check your email to get the payment info", "info");
+                if (Mail::failures()) {
+                    CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! But failed when sending email about payment info. Contact administrator for payment info", "warning");
+                } 
+                CRUDBooster::redirect(URL::to('eo/event'), "The event has been added! Please check your email to get the payment info", "info");
 
+            }
         }
     }
 
@@ -174,13 +176,15 @@ class EOEventController extends Controller
     public function update(Request $request, $id)
     {
         if(Str::contains(URL::previous(), 'edit')){
-            $request->validate([
+            $validatedData = $request->validate([
                 'date_start' => 'required|after:yesterday', 
-                'date_start' => 'required|after_or_equal:date_start', 
+                'date_end' => 'required|after_or_equal:date_start', 
             ]);
-            
-            unset($request['_token'], $request['_method']);
-            DB::table('event')->where('id', $id)->update($request->all());
+
+            if($validatedData){
+                unset($request['_token'], $request['_method']);
+                DB::table('event')->where('id', $id)->update($request->all());
+            }
         } else {
             $bg_path = 'assets/uploads/background';
             $btn_path = 'assets/uploads/button';
