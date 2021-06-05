@@ -101,9 +101,15 @@
                 <a class='btn btn-xs btn-primary btn-detail' title='Detail Data' href='{{ route('category.show', $row->id) }}'>
                   <i class='fa fa-eye'></i>
                 </a>
-                <a class='btn btn-xs btn-success btn-edit' title='Edit Data' href="{{ route('category.edit', $row->id) }}">
-                  <i class='fa fa-pencil'></i>
-                </a>
+                @if($row->is_draw==0)
+                  <a class='btn btn-xs btn-success btn-edit' title='Edit Data' href="{{ route('category.edit', $row->id) }}">
+                    <i class='fa fa-pencil'></i>
+                  </a>
+                @else
+                  <a class='btn btn-xs btn-edit' title='Edit Data'>
+                    <i class='fa fa-pencil'></i>
+                  </a>
+                @endif
                 <a class='btn btn-xs btn-danger btn-delete' title='Delete' href='javascript:;' 
                   onclick="swal({   
                     title: 'Are you sure ?',   
