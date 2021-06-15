@@ -266,14 +266,7 @@
 		}
 
 		public function savePayment(Request $request, $id=null){
-	    	$path = 'assets/uploads/payment';
-	    	
-	    	if($request->file('photo')!=''){
-	    		$data['photo'] = Str::random(10).'.'.$request->file('photo')->getClientOriginalExtension();
-	    		$request->file('photo')->move(public_path($path), $data['photo']);
-	    	}
-
-	    	$request->validate([
+	    	$validateData = $request->validate([
 	            'name' => 'required',
 	            'transfer_date' => 'required',
 	            'nominal' => 'required',
@@ -281,24 +274,33 @@
 	            'photo' => 'image|mimes:jpg,jpeg,png,bmp'
 	        ]);
 
-	    	$data['name'] = $request->input('name');
-	        $data['transfer_date'] = $request->input('transfer_date');
-	        $data['nominal'] = $request->input('nominal');
-	        $data['event_id'] = $request->input('event_id');
+	    	if($validateData){
+	    		$path = 'assets/uploads/payment';
+	    	
+		    	if($request->file('photo')!=''){
+		    		$data['photo'] = Str::random(10).'.'.$request->file('photo')->getClientOriginalExtension();
+		    		$request->file('photo')->move(public_path($path), $data['photo']);
+		    	}
 
-	        if($id==null){
-	        	$data['status'] = 'Waiting for confirmation';
-	        	$data['created_at'] = date('Y-m-d H:i:s');
-	        	$insert = DB::table('payment')->insert($data);
-		        if($insert){
-		            DB::table('event')->where('id', $data['event_id'])->update(['payment_status' => 'Waiting for confirmation']);
-		            CRUDBooster::redirect(CRUDBooster::mainpath(), "The payment has been saved !","info");
-		        }	
-	        } else{
-	        	$data['updated_at'] = date('Y-m-d H:i:s');
-	        	DB::table('payment')->where('id', $id)->update($data);
-	        	CRUDBooster::redirect(CRUDBooster::mainpath(), "The payment has been updated !","info");
-	        }
+		    	$data['name'] = $request->input('name');
+		        $data['transfer_date'] = $request->input('transfer_date');
+		        $data['nominal'] = $request->input('nominal');
+		        $data['event_id'] = $request->input('event_id');
+
+		        if($id==null){
+		        	$data['status'] = 'Waiting for confirmation';
+		        	$data['created_at'] = date('Y-m-d H:i:s');
+		        	$insert = DB::table('payment')->insert($data);
+			        if($insert){
+			            DB::table('event')->where('id', $data['event_id'])->update(['payment_status' => 'Waiting for confirmation']);
+			            CRUDBooster::redirect(CRUDBooster::mainpath(), "The payment has been saved !","info");
+			        }	
+		        } else{
+		        	$data['updated_at'] = date('Y-m-d H:i:s');
+		        	DB::table('payment')->where('id', $id)->update($data);
+		        	CRUDBooster::redirect(CRUDBooster::mainpath(), "The payment has been updated !","info");
+		        }
+	    	}
 	    }
 
 	    public function getSetStatus($status,$id) {
