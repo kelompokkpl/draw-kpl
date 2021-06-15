@@ -97,7 +97,7 @@
 	        | 
 	        */
 	        $this->addaction = array();
-	        $this->addaction[] = ['label'=>'Set Active','url'=>CRUDBooster::mainpath('set-status/Active/[id]'),'icon'=>'fa fa-check','color'=>'success','showIf'=>"[status] == 'Non Active'"];
+	        $this->addaction[] = ['label'=>'Set Active','url'=>CRUDBooster::mainpath('set-status/Active/[id]'),'icon'=>'fa fa-check','color'=>'success','showIf'=>"[status] == 'Non Active'", 'confirmation' => true];
 			$this->addaction[] = ['label'=>'Set Non Active','url'=>CRUDBooster::mainpath('set-status/Non Active/[id]'),'icon'=>'fa fa-ban','color'=>'warning','showIf'=>"[status] == 'Active'", 'confirmation' => true];
 			if(CRUDBooster::myPrivilegeId() != '3'){ // if the current privilege is not Administrator
 				$this->addaction[] = ['url'=>CRUDBooster::mainpath('preferences/[id]'),'icon'=>'fa fa-gear','color'=>'info','title'=>'Setting Preference'];
