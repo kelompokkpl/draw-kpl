@@ -236,7 +236,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+	        $query->whereNull('event.deleted_at');
 	    }
 
 	    /*
