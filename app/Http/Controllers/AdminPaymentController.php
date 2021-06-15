@@ -48,7 +48,7 @@
 			$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:100','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Transfer Date','name'=>'transfer_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Nominal','name'=>'nominal','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Photo','name'=>'photo','type'=>'upload','validation'=>'required|mimes:jpg,jpeg,png,bmp|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, BMP'];
+			$this->form[] = ['label'=>'Photo','name'=>'photo','type'=>'upload','validation'=>'required|image|mimes:jpg,jpeg,png,bmp|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, BMP'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
