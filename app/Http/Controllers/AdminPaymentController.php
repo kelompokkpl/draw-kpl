@@ -277,7 +277,8 @@
 	            'name' => 'required',
 	            'transfer_date' => 'required',
 	            'nominal' => 'required',
-	            'event_id' => 'required'
+	            'event_id' => 'required',
+	            'photo' => 'image|mimes:jpg,jpeg,png,bmp'
 	        ]);
 
 	    	$data['name'] = $request->input('name');
