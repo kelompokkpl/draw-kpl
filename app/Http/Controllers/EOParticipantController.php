@@ -37,11 +37,17 @@ class EOParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        unset($request['_token']);
-        $request['created_at'] = date('Y-m-d H:i:s');
-        $request['event_id'] = Session::get('event_id');
-        DB::table('participant')->insert($request->all());
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant has been added!", "info");
+        $validatedData = $request->validate([
+            'phone' => 'regex:/[0-9]/', 
+        ]);
+
+        if($validatedData){
+            unset($request['_token']);
+            $request['created_at'] = date('Y-m-d H:i:s');
+            $request['event_id'] = Session::get('event_id');
+            DB::table('participant')->insert($request->all());
+            CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant has been added!", "info");
+        }
     }
 
     /**
@@ -53,10 +59,16 @@ class EOParticipantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        unset($request['_token'], $request['_method']);
-        $request['updated_at'] = date('Y-m-d H:i:s');
-        DB::table('participant')->where('id', $id)->update($request->all());
-        CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Good job! Participant data success updated!", "info");
+        $validatedData = $request->validate([
+            'phone' => 'regex:/[0-9]/', 
+        ]);
+
+        if($validatedData){
+            unset($request['_token'], $request['_method']);
+            $request['updated_at'] = date('Y-m-d H:i:s');
+            DB::table('participant')->where('id', $id)->update($request->all());
+            CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Good job! Participant data success updated!", "info");
+        }
     }
 
     /**
