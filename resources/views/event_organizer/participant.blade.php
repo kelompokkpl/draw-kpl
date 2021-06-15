@@ -66,11 +66,9 @@
                           </div>
 
                           <div class='form-group header-group-0 ' id='form-group-name' style="">
-                            <label class='control-label col-sm-2'> Phone 
-                              <span class='text-danger' title='This field is required'>*</span>
-                            </label>
+                            <label class='control-label col-sm-2'> Phone</label>
                             <div class="col-sm-10">
-                              <input type='text' title="Phone" maxlength='16' class='form-control' name="phone" value='' placeholder="Participant's phone number" required />
+                              <input type='text' title="Phone" maxlength='16' class='form-control' name="phone" value='' placeholder="Participant's phone number"/>
                               <div class="text-danger"></div>
                               <p class='help-block'></p>
                             </div>
