@@ -271,7 +271,7 @@
 	            'transfer_date' => 'required',
 	            'nominal' => 'required',
 	            'event_id' => 'required',
-	            'photo' => 'image|mimes:jpg,jpeg,png,bmp'
+	            'photo' => 'mimes:jpg,jpeg,png,bmp'
 	        ]);
 
 	    	if($validateData){
