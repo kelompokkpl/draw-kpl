@@ -89,7 +89,7 @@
 	        $this->addaction = array();
 			$this->addaction[] = ['label'=>'Confirm','url'=>CRUDBooster::mainpath('set-status/Confirmed/[id]'),'icon'=>'fa fa-check','color'=>'success','showIf'=>"[status] == 'Waiting for confirmation'", 'confirmation' => true];
 			$this->addaction[] = ['label'=>'Reject','url'=>CRUDBooster::mainpath('set-status/Rejected/[id]'),'icon'=>'fa fa-ban','color'=>'danger','showIf'=>"[status] == 'Waiting for confirmation'", 'confirmation' => true];
-			$this->addaction[] = ['url'=>CRUDBooster::mainpath('invoice/[id]'),'icon'=>'fa fa-print','color'=>'info','showIf'=>"[status] == 'Confirmed'"];
+			$this->addaction[] = ['url'=>CRUDBooster::mainpath('invoice/[id]'),'icon'=>'fa fa-print','color'=>'info','showIf'=>"[status] == 'Confirmed'", 'target'=>'_blank'];
 
 
 	        /* 
