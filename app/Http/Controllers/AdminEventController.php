@@ -41,7 +41,7 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'User','name'=>'cms_users_id','type'=>'select2','width'=>'col-sm-10','datatable'=>'cms_users,name'];
+			$this->form[] = ['label'=>'User','name'=>'cms_users_id','type'=>'select2','width'=>'col-sm-10','datatable'=>'cms_users,name','validation'=>'required'];
 			$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:100','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Date Start','name'=>'date_start','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Date End','name'=>'date_end','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
