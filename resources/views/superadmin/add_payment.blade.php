@@ -1,7 +1,19 @@
 @extends('crudbooster::admin_template')
 @section('content')
     <p><a title='Return' href="{{URL::to('admin/payment')}}"><i class='fa fa-chevron-circle-left '></i> &nbsp; Back To List Data Payment</a></p>
-                    
+        
+        @if ($errors->any())
+            <div class='alert alert-danger'>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-danger"></i> Whoops!</h4>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <strong><i class='fa fa-money'></i> Add Payment</strong>
