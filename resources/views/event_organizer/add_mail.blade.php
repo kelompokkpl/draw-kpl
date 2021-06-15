@@ -87,11 +87,10 @@
   $('#btn-submit').on('click',function(e){
     e.preventDefault();
     var form = $(this).parents('form');
-    let content = $('#editor').val();
+    let content = CKEDITOR.instances.editor.getData();
     let subject = $('#subject').val();
-    alert('con'+content+' '+subject);
+
     if(content == '' || subject == ''){
-      alert('con'+content+' '+subject);
         swal({
           title: "Whoops!",
           text: "You must fill subject and content!",
