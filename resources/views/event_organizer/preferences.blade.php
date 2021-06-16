@@ -47,20 +47,6 @@
   <div class='panel panel-default'>
     <div class='panel-heading'>Setting Preferences</div>
 
-    <!-- Error -->
-    @if(session('errors'))
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <span class="alert-text">
-          @foreach($errors->all() as $err)
-            <li>{{$err}}</li>
-          @endforeach
-        </span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    @endif
-
     <form method="POST" action="{{route('event.update', Session::get('event_id'))}}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
