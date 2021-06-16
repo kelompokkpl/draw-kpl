@@ -449,8 +449,8 @@
 				$data['button_border_color'] = $request->input('button_border_color');
 				$data['button_shadow_color'] = $request->input('button_shadow_color');
 
-				DB::table('event')->where('id', $id)->update($data);	
-				CRUDBooster::redirect(CRUDBooster::mainpath(), "The event preferences has been updated !","info");
+				DB::table('event')->where('id', $id)->update($data);
+				CRUDBooster::redirect(URL::previous(),"The event preferences has been updated !","info");	
             }
 	    }
 	}
