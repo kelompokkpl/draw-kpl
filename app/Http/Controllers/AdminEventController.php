@@ -408,43 +408,49 @@
 	    }
 
 	    public function savePreferences(Request $request, $id) {
-	    	$bg_path = 'assets/uploads/background';
-	    	$btn_path = 'assets/uploads/button';
-
-	    	if($request->file('background_new_draw')!=''){
-	    		$data['background_new_draw'] = Str::random(10).'.'.$request->file('background_new_draw')->getClientOriginalExtension();
-	    		$request->file('background_new_draw')->move(public_path($bg_path), $data['background_new_draw']);
-	    	}
-	    	if($request->file('background_recent_draw')!=''){
-	    		$data['background_recent_draw'] = Str::random(10).'.'.$request->file('background_recent_draw')->getClientOriginalExtension();
-	    		$request->file('background_recent_draw')->move(public_path($bg_path), $data['background_recent_draw']);
-	    	}
-	    	if($request->file('background_draw_history')!=''){
-	    		$data['background_draw_history'] = Str::random(10).'.'.$request->file('background_draw_history')->getClientOriginalExtension();
-	    		$request->file('background_draw_history')->move(public_path($bg_path), $data['background_draw_history']);
-	    	}
-	    	if($request->file('button_image')!=''){
-	    		$data['button_image'] = Str::random(10).'.'.$request->file('button_image')->getClientOriginalExtension();
-	    		$request->file('button_image')->move(public_path($btn_path), $data['button_image']);
-	    	}
-
-	    	$request->validate([
-	            'global_text_color' => 'required',
+	    	$validated = $request->validate([
+                'background_new_draw' => 'mimes:jpg,jpeg,png,bmp',
+                'background_recent_draw' => 'mimes:jpg,jpeg,png,bmp',
+                'background_draw_history' => 'mimes:jpg,jpeg,png,bmp', 
+                'button_image' => 'mimes:jpg,jpeg,png,bmp',
+                'global_text_color' => 'required',
 	            'hr_color' => 'required',
 	            'button_background_color' => 'required',
 	            'button_text_color' => 'required',
 	            'button_border_color' => 'required',
 	            'button_shadow_color' => 'required'
-	        ]);
+            ]);
 
-	    	$data['global_text_color'] = $request->input('global_text_color');
-			$data['hr_color'] = $request->input('hr_color');
-			$data['button_background_color'] = $request->input('button_background_color');
-			$data['button_text_color'] = $request->input('button_text_color');
-			$data['button_border_color'] = $request->input('button_border_color');
-			$data['button_shadow_color'] = $request->input('button_shadow_color');
+            if($validated){
+            	$bg_path = 'assets/uploads/background';
+		    	$btn_path = 'assets/uploads/button';
 
-			DB::table('event')->where('id', $id)->update($data);	
-			CRUDBooster::redirect(CRUDBooster::mainpath(), "The event preferences has been updated !","info");
+		    	if($request->file('background_new_draw')!=''){
+		    		$data['background_new_draw'] = Str::random(10).'.'.$request->file('background_new_draw')->getClientOriginalExtension();
+		    		$request->file('background_new_draw')->move(public_path($bg_path), $data['background_new_draw']);
+		    	}
+		    	if($request->file('background_recent_draw')!=''){
+		    		$data['background_recent_draw'] = Str::random(10).'.'.$request->file('background_recent_draw')->getClientOriginalExtension();
+		    		$request->file('background_recent_draw')->move(public_path($bg_path), $data['background_recent_draw']);
+		    	}
+		    	if($request->file('background_draw_history')!=''){
+		    		$data['background_draw_history'] = Str::random(10).'.'.$request->file('background_draw_history')->getClientOriginalExtension();
+		    		$request->file('background_draw_history')->move(public_path($bg_path), $data['background_draw_history']);
+		    	}
+		    	if($request->file('button_image')!=''){
+		    		$data['button_image'] = Str::random(10).'.'.$request->file('button_image')->getClientOriginalExtension();
+		    		$request->file('button_image')->move(public_path($btn_path), $data['button_image']);
+		    	}
+
+		    	$data['global_text_color'] = $request->input('global_text_color');
+				$data['hr_color'] = $request->input('hr_color');
+				$data['button_background_color'] = $request->input('button_background_color');
+				$data['button_text_color'] = $request->input('button_text_color');
+				$data['button_border_color'] = $request->input('button_border_color');
+				$data['button_shadow_color'] = $request->input('button_shadow_color');
+
+				DB::table('event')->where('id', $id)->update($data);	
+				CRUDBooster::redirect(CRUDBooster::mainpath(), "The event preferences has been updated !","info");
+            }
 	    }
 	}
