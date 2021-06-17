@@ -10,7 +10,7 @@
                 <img src="{{ CRUDBooster::myPhoto() }}" class="img-circle" alt="{{ cbLang('user_image') }}"/>
             </div>
             <div class="pull-{{ cbLang('left') }} info">
-                <p>{{ CRUDBooster::myName() }}-{{Session::get('can_draw')}}</p>
+                <p>{{ CRUDBooster::myName() }}</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> {{ cbLang('online') }}</a>
             </div>
@@ -59,7 +59,7 @@
                     </li>
                 @else
                     <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
-                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
+                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active' && Session::get('can_draw') > 0)?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
                         @if(Session::get('event_active')!='Active')
                             onclick="swal({   
                                 title: 'Warning',   
