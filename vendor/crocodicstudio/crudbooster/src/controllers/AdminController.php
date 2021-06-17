@@ -15,7 +15,7 @@ class AdminController extends CBController
         $data = [];
         $data['page_title'] = '<strong>Dashboard</strong>';
         $data['event'] = DB::table('event')->whereNull('deleted_at')->count(); 
-        $data['transaction'] = DB::table('payment')->count();
+        $data['transaction'] = DB::table('payment')->whereNull('deleted_at')->count();
         $data['payment'] = DB::table('payment')
                             ->where('status', 'Confirmed')
                             ->sum('nominal');
@@ -118,7 +118,7 @@ class AdminController extends CBController
         }
         $data['drilldown'] = $drilldown;
 
-        $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' GROUP BY month ORDER BY month LIMIT 12");
+        $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' AND ISNULL(payment.deleted_at) GROUP BY month ORDER BY month LIMIT 12");
 
         return view('dashboard.superadmin', $data);
     }
