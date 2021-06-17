@@ -297,6 +297,7 @@ class EOEventController extends Controller
         Session::put('event_name', $data['event']->name);
         Session::put('event_active', $data['event']->status);
         Session::put('can_draw', $can_draw);
+        Session::put('can_part', $data['participant']);
         return view('event_organizer.event_dashboard', $data);
     }
 

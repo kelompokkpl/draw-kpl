@@ -26,6 +26,12 @@ class EOParticipantController extends Controller
         $data['participant'] = DB::table('participant')
                             ->where('event_id', Session::get('event_id'))
                             ->get();
+
+        $can_part = DB::table('participant')
+            ->where('event_id', Session::get('event_id'))
+            ->count();
+        Session::put('can_part', $can_part);
+
         return view('event_organizer.participant', $data);
     }
 
@@ -46,6 +52,12 @@ class EOParticipantController extends Controller
             $request['created_at'] = date('Y-m-d H:i:s');
             $request['event_id'] = Session::get('event_id');
             DB::table('participant')->insert($request->all());
+
+            $can_part = DB::table('participant')
+                ->where('event_id', Session::get('event_id'))
+                ->count();
+            Session::put('can_part', $can_part);
+
             CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant has been added!", "info");
         }
     }
@@ -83,6 +95,12 @@ class EOParticipantController extends Controller
             CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Hey! Participant with id ".$id." is doesn't exist!","warning");
         }
         DB::table('participant')->where('id', $id)->delete();
+
+        $can_part = DB::table('participant')
+            ->where('event_id', Session::get('event_id'))
+            ->count();
+        Session::put('can_part', $can_part);
+
         CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Good job! The participant success deleted!", "info");
     }
 
@@ -98,6 +116,12 @@ class EOParticipantController extends Controller
             $extension = $request->participant->getClientOriginalExtension();
             if($extension == 'csv' || $extension == 'xls' || $extension == 'xlsx'){
                 Excel::import(new ParticipantImport, request()->file('participant'));
+
+                $can_part = DB::table('participant')
+                    ->where('event_id', Session::get('event_id'))
+                    ->count();
+                Session::put('can_part', $can_part);
+                
                 CRUDBooster::redirect(URL::to('eo/dashboard_event/participant'), "Yohoo! The participant success imported!", "info");
             } else{
                 CRUDBooster::redirect(URL::to('eo/dashboard_event/participant/import'), "Hmm! File type must be in .csv, .xls, .xlsx", "danger");

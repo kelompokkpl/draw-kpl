@@ -59,7 +59,7 @@
                     </li>
                 @else
                     <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
-                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active' && Session::get('can_draw') > 0)?'_blank':''}}" href="{{(Session::get('event_active')=='Active' && Session::get('can_draw') > 0)?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
+                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active' && Session::get('can_draw') > 0 && Session::get('can_part') > 0)?'_blank':''}}" href="{{(Session::get('event_active')=='Active' && Session::get('can_draw') > 0 && Session::get('can_part') > 0)?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
                         @if(Session::get('event_active')!='Active')
                             onclick="swal({   
                                 title: 'Warning',   
@@ -71,10 +71,10 @@
                                 closeOnConfirm: false 
                             });"
                         @else
-                            @if(Session::get('can_draw')==0)
+                            @if(Session::get('can_draw')==0 || Session::get('can_part')==0)
                             onclick="swal({   
                                 title: 'Warning',   
-                                text: 'You do not have categories for drawing yet',   
+                                text: 'You do not have categories or participant for drawing yet',   
                                 type: 'warning',   
                                 showCancelButton: false,   
                                 confirmButtonColor: '#ff0000',   
