@@ -71,6 +71,7 @@
                                 closeOnConfirm: false 
                             });"
                         >
+                        </a>
                         @else
                         <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
                         @if(Session::get('event_active')!='Active')
