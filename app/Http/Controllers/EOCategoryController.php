@@ -28,7 +28,7 @@ class EOCategoryController extends Controller
                                 ->get();
 
         $can_draw = DB::table('category')
-            ->where('event_id', $id)
+            ->where('event_id', Session::get('event_id'))
             ->where('is_draw', 0)
             ->count();
         Session::put('can_draw', $can_draw);
@@ -64,7 +64,7 @@ class EOCategoryController extends Controller
         $insert = DB::table('category')->insert($request->all());
 
         $can_draw = DB::table('category')
-            ->where('event_id', $id)
+            ->where('event_id', Session::get('event_id'))
             ->where('is_draw', 0)
             ->count();
         Session::put('can_draw', $can_draw);
@@ -151,11 +151,11 @@ class EOCategoryController extends Controller
         DB::table('category')->where('id', $id)->delete();
 
         $can_draw = DB::table('category')
-            ->where('event_id', $id)
+            ->where('event_id', Session::get('event_id'))
             ->where('is_draw', 0)
             ->count();
         Session::put('can_draw', $can_draw);
-        
+
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category'),"Good job! The category success deleted!","info");
     }
 }
