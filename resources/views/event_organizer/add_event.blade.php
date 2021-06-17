@@ -30,7 +30,7 @@
     <div class="panel-body">
         <form method="POST" action="{{URL::to('eo/event')}}" id="form">
           @csrf
-          <div class="col-sm-10 text-right">
+          <div class="col-sm-10">
           <div class='form-group header-group-0 ' id='form-group-name' style="">
             <label class='control-label col-sm-2'> Event Name
                 <span class='text-danger' title='This field is required'>*</span>
