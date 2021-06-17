@@ -60,7 +60,7 @@
                 @else
                     <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
                         @if($category==0)
-                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
+                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}'
                             onclick="swal({   
                                 title: 'Warning',   
                                 text: 'Your have no category yet, so you can not to draw!',   
@@ -71,6 +71,7 @@
                                 closeOnConfirm: false 
                             });"
                         >
+                        tt
                         </a>
                         @else
                         <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
