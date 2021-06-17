@@ -10,7 +10,7 @@
                 <img src="{{ CRUDBooster::myPhoto() }}" class="img-circle" alt="{{ cbLang('user_image') }}"/>
             </div>
             <div class="pull-{{ cbLang('left') }} info">
-                <p>{{ CRUDBooster::myName() }}</p>
+                <p>{{ CRUDBooster::myName() }}-{{Session::get('can_draw')}}</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> {{ cbLang('online') }}</a>
             </div>
