@@ -26,6 +26,13 @@ class EOCategoryController extends Controller
         $data['category'] = DB::table('category')
                                 ->where('category.event_id', Session::get('event_id'))
                                 ->get();
+
+        $can_draw = DB::table('category')
+            ->where('event_id', $id)
+            ->where('is_draw', 0)
+            ->count();
+        Session::put('can_draw', $can_draw);
+
         return view('event_organizer.category', $data);
     }
 
@@ -55,6 +62,12 @@ class EOCategoryController extends Controller
         unset($request['_token']);
         $request['created_at'] = date('Y-m-d H:i:s');
         $insert = DB::table('category')->insert($request->all());
+
+        $can_draw = DB::table('category')
+            ->where('event_id', $id)
+            ->where('is_draw', 0)
+            ->count();
+        Session::put('can_draw', $can_draw);
 
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Yohooo! The category has been added!", "info");
     }
@@ -136,6 +149,13 @@ class EOCategoryController extends Controller
             CRUDBooster::redirect(URL::to('eo/dashboard_event/category'), "Hey! Category with id ".$id." is doesn't exist!", "warning");
         }
         DB::table('category')->where('id', $id)->delete();
+
+        $can_draw = DB::table('category')
+            ->where('event_id', $id)
+            ->where('is_draw', 0)
+            ->count();
+        Session::put('can_draw', $can_draw);
+        
         CRUDBooster::redirect(URL::to('eo/dashboard_event/category'),"Good job! The category success deleted!","info");
     }
 }
