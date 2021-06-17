@@ -111,6 +111,12 @@ class DrawController extends Controller
         DB::table('winner')->insert($winner);
         DB::table('category')->where('id', Session::get('category_id'))->update(['is_draw'=>1]);
 
+        $can_draw = DB::table('category')
+            ->where('event_id', Session::get('event_id'))
+            ->where('is_draw', 0)
+            ->count();
+        Session::put('can_draw', $can_draw);
+
     	return view('draw_layout.drawing', $data);
     }
 

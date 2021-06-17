@@ -59,21 +59,6 @@
                     </li>
                 @else
                     <li class="{{ (Str::contains(URL::current(), 'dashboard_event/draw')) ? 'active' : '' }}">
-                        @if($category==0)
-                        <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}'
-                            onclick="swal({   
-                                title: 'Warning',   
-                                text: 'Your have no category yet, so you can not to draw!',   
-                                type: 'warning',   
-                                showCancelButton: false,   
-                                confirmButtonColor: '#ff0000',   
-                                confirmButtonText: 'OK',  
-                                closeOnConfirm: false 
-                            });"
-                        >
-                        tt
-                        </a>
-                        @else
                         <a class='{{($dashboard->color)?"text-".$dashboard->color:""}}' target="{{(Session::get('event_active')=='Active')?'_blank':''}}" href="{{(Session::get('event_active')=='Active')?URL::to('eo/dashboard_event/draw'):'javascript:;'}}"
                         @if(Session::get('event_active')!='Active')
                             onclick="swal({   
@@ -85,12 +70,23 @@
                                 confirmButtonText: 'OK',  
                                 closeOnConfirm: false 
                             });"
+                        @else
+                            @if(Session::get('can_draw')==0)
+                            onclick="swal({   
+                                title: 'Warning',   
+                                text: 'You do not have categories for drawing yet',   
+                                type: 'warning',   
+                                showCancelButton: false,   
+                                confirmButtonColor: '#ff0000',   
+                                confirmButtonText: 'OK',  
+                                closeOnConfirm: false 
+                            });"
+                            @endif
                         @endif
                         >
                             <i class='fa fa-magic'></i>
                             <span>Let's Draw!</span> 
                         </a>
-                        @endif
                     </li>
                     <li class="{{ (Str::contains(URL::current(), 'category') && !(Str::contains(URL::current(), '_disabled'))) ? 'active' : '' }}">
                         <a href='{{URL::to('eo/dashboard_event/category')}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-bars'></i>

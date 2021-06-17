@@ -262,6 +262,10 @@ class EOEventController extends Controller
         $data['category'] = DB::table('category')
                             ->where('event_id', $id)
                             ->count();
+        $can_draw = DB::table('category')
+                            ->where('event_id', $id)
+                            ->where('is_draw', 0)
+                            ->count();
         $data['participant'] = DB::table('participant')
                             ->where('event_id', $id)
                             ->count();
@@ -292,6 +296,7 @@ class EOEventController extends Controller
         Session::put('event_id', $id);
         Session::put('event_name', $data['event']->name);
         Session::put('event_active', $data['event']->status);
+        Session::put('can_draw', $can_draw);
         return view('event_organizer.event_dashboard', $data);
     }
 
