@@ -17,6 +17,7 @@ class AdminController extends CBController
         $data['event'] = DB::table('event')->whereNull('deleted_at')->count(); 
         $data['transaction'] = DB::table('payment')->whereNull('deleted_at')->count();
         $data['payment'] = DB::table('payment')
+                            ->whereNull('deleted_at')
                             ->where('status', 'Confirmed')
                             ->sum('nominal');
         $paid = DB::table('event')
