@@ -186,32 +186,52 @@ class EOEventController extends Controller
                 DB::table('event')->where('id', $id)->update($request->all());
             }
         } else {
-            $validated = $request->validate([
-                'background_new_draw' => 'mimes:jpg,jpeg,png,bmp',
-                'background_recent_draw' => 'mimes:jpg,jpeg,png,bmp',
-                'background_draw_history' => 'mimes:jpg,jpeg,png,bmp', 
-                'button_image' => 'mimes:jpg,jpeg,png,bmp'
-            ]);
+            // $validated = $request->validate([
+            //     'background_new_draw' => 'mimes:jpg,jpeg,png,bmp',
+            //     'background_recent_draw' => 'mimes:jpg,jpeg,png,bmp',
+            //     'background_draw_history' => 'mimes:jpg,jpeg,png,bmp', 
+            //     'button_image' => 'mimes:jpg,jpeg,png,bmp'
+            // ]);
 
-            if($validated){
+            // if($validated){
                 $bg_path = 'assets/uploads/background';
                 $btn_path = 'assets/uploads/button';
 
                 if($request->file('background_new_draw')!=''){
-                    $data['background_new_draw'] = Str::random(10).'.'.$request->file('background_new_draw')->getClientOriginalExtension();
-                    $request->file('background_new_draw')->move(public_path($bg_path), $data['background_new_draw']);
+                    $validated = $request->validate([
+                        'background_new_draw' => 'mimes:jpg,jpeg,png,bmp'
+                    ]);
+                    if($validated){
+                        $data['background_new_draw'] = Str::random(10).'.'.$request->file('background_new_draw')->getClientOriginalExtension();
+                        $request->file('background_new_draw')->move(public_path($bg_path), $data['background_new_draw']);
+                    }
                 }
                 if($request->file('background_recent_draw')!=''){
-                    $data['background_recent_draw'] = Str::random(10).'.'.$request->file('background_recent_draw')->getClientOriginalExtension();
-                    $request->file('background_recent_draw')->move(public_path($bg_path), $data['background_recent_draw']);
+                    $validated = $request->validate([
+                        'background_recent_draw' => 'mimes:jpg,jpeg,png,bmp'
+                    ]);
+                    if($validated){
+                        $data['background_recent_draw'] = Str::random(10).'.'.$request->file('background_recent_draw')->getClientOriginalExtension();
+                        $request->file('background_recent_draw')->move(public_path($bg_path), $data['background_recent_draw']);
+                    }
                 }
                 if($request->file('background_draw_history')!=''){
-                    $data['background_draw_history'] = Str::random(10).'.'.$request->file('background_draw_history')->getClientOriginalExtension();
-                    $request->file('background_draw_history')->move(public_path($bg_path), $data['background_draw_history']);
+                    $validated = $request->validate([
+                        'background_draw_history' => 'mimes:jpg,jpeg,png,bmp'
+                    ]);
+                    if($validated){
+                        $data['background_draw_history'] = Str::random(10).'.'.$request->file('background_draw_history')->getClientOriginalExtension();
+                        $request->file('background_draw_history')->move(public_path($bg_path), $data['background_draw_history']);
+                    }
                 }
                 if($request->file('button_image')!=''){
-                    $data['button_image'] = Str::random(10).'.'.$request->file('button_image')->getClientOriginalExtension();
-                    $request->file('button_image')->move(public_path($btn_path), $data['button_image']);
+                    $validated = $request->validate([
+                        'button_image' => 'mimes:jpg,jpeg,png,bmp'
+                    ]);
+                    if($validated){
+                        $data['button_image'] = Str::random(10).'.'.$request->file('button_image')->getClientOriginalExtension();
+                        $request->file('button_image')->move(public_path($btn_path), $data['button_image']);
+                    }
                 }
 
                 $data['global_text_color'] = $request->input('global_text_color');
@@ -222,7 +242,7 @@ class EOEventController extends Controller
                 $data['button_shadow_color'] = $request->input('button_shadow_color');
 
                 DB::table('event')->where('id', $id)->update($data);
-            }
+            // }
         }
         if(Str::contains(URL::previous(), 'dashboard_event/preferences')){
             CRUDBooster::redirect(URL::previous(),"Good job! The preferences success updated!","info");
