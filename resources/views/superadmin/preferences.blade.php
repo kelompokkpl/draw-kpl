@@ -5,18 +5,18 @@
 <style type="text/css">
   .btn-preview{
     text-align: center;
-    background-color: #f8514c;
-    color: #fff;
+    background-color: {{($event->button_background_color=='')?'#f8514c':$event->button_background_color}};
+    color: {{($event->button_text_color=='')?'#ffffff':$event->button_text_color}};
     text-transform: uppercase;
     font-size: 1.5rem;
     font-family: MontserratBold;
     padding:0.8rem 2rem;
-    border: 1px solid #f8514c;
+    border: 1px solid {{($event->button_border_color=='')?'#f8514c':$event->button_border_color}};
     outline: none;
     border-radius:.4rem;
-    box-shadow: 0 7px 10px 0 rgba(227,30,30,0.75);
-    -webkit-box-shadow: 0 7px 10px 0 rgba(227,30,30,0.75);
-    -moz-box-shadow: 0 7px 10px 0 rgba(227,30,30,0.75);
+    box-shadow: 0 7px 10px 0 {{($event->button_shadow_color=='')?'#f8514c':$event->button_shadow_color}};
+    -webkit-box-shadow: 0 7px 10px 0 {{($event->button_shadow_color=='')?'#f8514c':$event->button_shadow_color}};
+    -moz-box-shadow: 0 7px 10px 0 {{($event->button_shadow_color=='')?'#f8514c':$event->button_shadow_color}};
     cursor: pointer;
     -webkit-transition: .3s all ease-in-out;
     -o-transition: .3s all ease-in-out;
