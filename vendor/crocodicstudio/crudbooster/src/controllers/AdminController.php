@@ -12,116 +12,120 @@ class AdminController extends CBController
 {
     function getIndex()
     {
-        $data = [];
-        $data['page_title'] = '<strong>Dashboard</strong>';
-        $data['event'] = DB::table('event')->whereNull('deleted_at')->count(); 
-        $data['transaction'] = DB::table('payment')->whereNull('deleted_at')->count();
-        $data['payment'] = DB::table('payment')
-                            ->whereNull('deleted_at')
-                            ->where('status', 'Confirmed')
-                            ->sum('nominal');
-        $paid = DB::table('event')
-                ->where('date_end', '>=', date('Y-m-d'))
-                ->where('payment_status', 'Paid')
-                ->whereNull('deleted_at')
-                ->count();
-        $unpaid = DB::table('event')
-                ->where('date_end', '>=', date('Y-m-d'))
-                ->where('payment_status', '<>', 'Paid')
-                ->whereNull('deleted_at')
-                ->count();
-        $data['pay_chart'] = ['paid' => $paid, 'unpaid' =>  $unpaid];
-
-        // $userPerDay = DB::select('SELECT log.cms_users_id as user, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 GROUP BY date, user ORDER BY user');
-        // foreach ($userPerDay as $row) {
-        //     $perDay[$row->user][$row->date] = $row->y;
-        // }
-
-        // $user = DB::table('cms_users')
-        //             ->where('id_cms_privileges', 2)
-        //             ->select('id', 'name')
-        //             ->get();
-        // $date = array();
-
-        // for($i = 0; $i < 30; $i++){
-        //     $date[] = date("Y-m-d", strtotime('-'. $i .' days'));
-        // }
-
-
-        // $data['date'] = array_reverse($date);
-        
-        // // dd($data['logData']);
-        // $series = array();
-        // foreach ($user as $row) {
-        //     for($i = 0; $i < 30; $i++){
-        //         if(!empty($perDay[$row->id][$data['date'][$i]])){
-        //             $y = $perDay[$row->id][$data['date'][$i]];
-        //         } else{
-        //             $y = 0;
-        //         }
-
-        //         $datas[$i] = ['y'=>$y]; 
-        //     }
-        //     $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
-        // }
-
-        $log = DB::select('SELECT log.url as path, log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" GROUP BY date, path, event');
-        // dd($log);
-        $eventPerDay = DB::select('SELECT log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" GROUP BY date, event ORDER BY event');
-        foreach ($eventPerDay as $row) {
-            $perDay[$row->event][$row->date] = $row->y;
-        }
-        foreach ($log as $row) {
-            $perLog[$row->event][$row->date][] = [$row->path, $row->y];
-        }
-
-        $event = DB::table('event')
-                    ->select('id', 'name')
+        if(Session::get('admin_privileges')==2){
+            return redirect()->route('indexEO');
+        } else{
+            $data = [];
+            $data['page_title'] = '<strong>Dashboard</strong>';
+            $data['event'] = DB::table('event')->whereNull('deleted_at')->count(); 
+            $data['transaction'] = DB::table('payment')->whereNull('deleted_at')->count();
+            $data['payment'] = DB::table('payment')
+                                ->whereNull('deleted_at')
+                                ->where('status', 'Confirmed')
+                                ->sum('nominal');
+            $paid = DB::table('event')
+                    ->where('date_end', '>=', date('Y-m-d'))
+                    ->where('payment_status', 'Paid')
                     ->whereNull('deleted_at')
-                    ->get();
-        $date = array();
+                    ->count();
+            $unpaid = DB::table('event')
+                    ->where('date_end', '>=', date('Y-m-d'))
+                    ->where('payment_status', '<>', 'Paid')
+                    ->whereNull('deleted_at')
+                    ->count();
+            $data['pay_chart'] = ['paid' => $paid, 'unpaid' =>  $unpaid];
 
-        for($i = 0; $i < 30; $i++){
-            $date[] = date("Y-m-d", strtotime('-'. $i .' days'));
-        }
+            // $userPerDay = DB::select('SELECT log.cms_users_id as user, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 GROUP BY date, user ORDER BY user');
+            // foreach ($userPerDay as $row) {
+            //     $perDay[$row->user][$row->date] = $row->y;
+            // }
 
-        $data['date'] = array_reverse($date);
-        
-        $series = array();
-        $k=0;
-        foreach ($event as $row) {
-            for($i = 0; $i < 30; $i++){
-                if(!empty($perDay[$row->id][$data['date'][$i]])){
-                    $y = $perDay[$row->id][$data['date'][$i]];
-                } else{
-                    $y = 0;
-                }
-                if(!empty($perLog[$row->id][$data['date'][$i]])){
-                    $drilldown[$k]['name'] = $row->name.'<br>'.$data['date'][$i];
-                    $drilldown[$k]['type']  = 'column';
-                    $drilldown[$k]['id'] = $row->id.$data['date'][$i];
-                    $dataDrill = array();
-                    for ($n=0; $n < count($perLog[$row->id][$data['date'][$i]]); $n++) { 
-                        $dataDrill[] = [$perLog[$row->id][$data['date'][$i]][$n][0], $perLog[$row->id][$data['date'][$i]][$n][1]];   
-                    }
-                    
-                    $drilldown[$k]['data'] = $dataDrill;
-                    
-                    $k++;
+            // $user = DB::table('cms_users')
+            //             ->where('id_cms_privileges', 2)
+            //             ->select('id', 'name')
+            //             ->get();
+            // $date = array();
 
-                    $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]];
-                } else{
-                     $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y];
-                } 
-            }
-            $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
+            // for($i = 0; $i < 30; $i++){
+            //     $date[] = date("Y-m-d", strtotime('-'. $i .' days'));
+            // }
+
+
+            // $data['date'] = array_reverse($date);
             
+            // // dd($data['logData']);
+            // $series = array();
+            // foreach ($user as $row) {
+            //     for($i = 0; $i < 30; $i++){
+            //         if(!empty($perDay[$row->id][$data['date'][$i]])){
+            //             $y = $perDay[$row->id][$data['date'][$i]];
+            //         } else{
+            //             $y = 0;
+            //         }
+
+            //         $datas[$i] = ['y'=>$y]; 
+            //     }
+            //     $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
+            // }
+
+            $log = DB::select('SELECT log.url as path, log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" GROUP BY date, path, event');
+            // dd($log);
+            $eventPerDay = DB::select('SELECT log.event_id as event, COUNT(*) as y, CAST(log.created_at AS DATE) as date from log WHERE DATEDIFF(now(), STR_TO_DATE(created_at,"%Y-%m-%d")) <= 30 AND event_id <> "" GROUP BY date, event ORDER BY event');
+            foreach ($eventPerDay as $row) {
+                $perDay[$row->event][$row->date] = $row->y;
+            }
+            foreach ($log as $row) {
+                $perLog[$row->event][$row->date][] = [$row->path, $row->y];
+            }
+
+            $event = DB::table('event')
+                        ->select('id', 'name')
+                        ->whereNull('deleted_at')
+                        ->get();
+            $date = array();
+
+            for($i = 0; $i < 30; $i++){
+                $date[] = date("Y-m-d", strtotime('-'. $i .' days'));
+            }
+
+            $data['date'] = array_reverse($date);
+            
+            $series = array();
+            $k=0;
+            foreach ($event as $row) {
+                for($i = 0; $i < 30; $i++){
+                    if(!empty($perDay[$row->id][$data['date'][$i]])){
+                        $y = $perDay[$row->id][$data['date'][$i]];
+                    } else{
+                        $y = 0;
+                    }
+                    if(!empty($perLog[$row->id][$data['date'][$i]])){
+                        $drilldown[$k]['name'] = $row->name.'<br>'.$data['date'][$i];
+                        $drilldown[$k]['type']  = 'column';
+                        $drilldown[$k]['id'] = $row->id.$data['date'][$i];
+                        $dataDrill = array();
+                        for ($n=0; $n < count($perLog[$row->id][$data['date'][$i]]); $n++) { 
+                            $dataDrill[] = [$perLog[$row->id][$data['date'][$i]][$n][0], $perLog[$row->id][$data['date'][$i]][$n][1]];   
+                        }
+                        
+                        $drilldown[$k]['data'] = $dataDrill;
+                        
+                        $k++;
+
+                        $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y, 'drilldown'=>$row->id.$data['date'][$i]];
+                    } else{
+                         $datas[$i] = ['name'=>$data['date'][$i], 'y'=>$y];
+                    } 
+                }
+                $data['series'][] = ['name'=>$row->name, 'data'=>$datas]; 
+                
+            }
+            $data['drilldown'] = $drilldown;
+
+            $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' AND ISNULL(payment.deleted_at) GROUP BY month ORDER BY month LIMIT 12");
+
+            return view('dashboard.superadmin', $data);
         }
-        $data['drilldown'] = $drilldown;
-
-        $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' AND ISNULL(payment.deleted_at) GROUP BY month ORDER BY month LIMIT 12");
-
-        return view('dashboard.superadmin', $data);
     }
 
     public function getLockscreen()
