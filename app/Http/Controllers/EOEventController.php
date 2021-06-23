@@ -262,6 +262,7 @@ class EOEventController extends Controller
             CRUDBooster::redirect(URL::to('eo/event'), "Hey! Event with id ".$id." is doesn't exist!","warning");
         }
         DB::table('event')->where('id', $id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+        DB::table('payment')->where('event_id', $id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
         CRUDBooster::redirect(URL::to('eo/event'),"Good job! The event success deleted!","info");
     }
 
