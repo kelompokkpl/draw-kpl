@@ -20,9 +20,11 @@ class AdminController extends CBController
             $data['event'] = DB::table('event')->whereNull('deleted_at')->count(); 
             $data['transaction'] = DB::table('payment')->whereNull('deleted_at')->count();
             $data['payment'] = DB::table('payment')
-                                ->whereNull('deleted_at')
-                                ->where('status', 'Confirmed')
-                                ->sum('nominal');
+                                ->leftJoin('event', 'event.id', 'payment.event_id')
+                                ->whereNull('event.deleted_at')
+                                ->whereNull('payment.deleted_at')
+                                ->where('payment.status', 'Confirmed')
+                                ->sum('payment.nominal');
             $paid = DB::table('event')
                     ->where('date_end', '>=', date('Y-m-d'))
                     ->where('payment_status', 'Paid')
@@ -122,7 +124,7 @@ class AdminController extends CBController
             }
             $data['drilldown'] = $drilldown;
 
-            $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment WHERE payment.status = 'confirmed' AND ISNULL(payment.deleted_at) GROUP BY month ORDER BY month LIMIT 12");
+            $data['income'] = DB::select("SELECT SUM(payment.nominal) as y, MONTH(transfer_date) as month FROM payment LEFT JOIN event ON event.id = payment.event_id WHERE ISNULL(event.deleted_at) AND payment.status = 'confirmed' AND ISNULL(payment.deleted_at) GROUP BY month ORDER BY month LIMIT 12");
 
             return view('dashboard.superadmin', $data);
         }
