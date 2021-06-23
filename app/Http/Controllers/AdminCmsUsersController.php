@@ -5,6 +5,7 @@ use Request;
 use DB;
 use CRUDbooster;
 use crocodicstudio\crudbooster\controllers\CBController;
+use Illuminate\Support\Facades\Hash;
 
 class AdminCmsUsersController extends CBController {
 
