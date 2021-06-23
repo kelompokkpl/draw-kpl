@@ -177,7 +177,7 @@ class EOEventController extends Controller
     {
         if(Str::contains(URL::previous(), 'edit')){
             $validatedData = $request->validate([
-                'date_start' => 'required|after:yesterday', 
+                'date_start' => 'required', 
                 'date_end' => 'required|after_or_equal:date_start', 
             ]);
 
